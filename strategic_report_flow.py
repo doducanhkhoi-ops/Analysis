@@ -13,31 +13,58 @@ from email.mime.base import MIMEBase
 from email import encoders
 import mysql.connector
 
+from urllib.parse import urlparse
+
 # Thiết lập encoding UTF-8
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 # ============== CẤU HÌNH (HỖ TRỢ CẢ LOCAL VÀ GITHUB ACTIONS / CLOUD) ==============
+def clean_val(val):
+    if val is None:
+        return ""
+    s = str(val).strip()
+    if (s.startswith('"') and s.endswith('"')) or (s.startswith("'") and s.endswith("'")):
+        s = s[1:-1].strip()
+    return s
+
 def get_env_or_default(var_names, default):
     for name in var_names:
         val = os.getenv(name)
         if val is not None and str(val).strip() != "":
-            return str(val).strip()
+            cleaned = clean_val(val)
+            for prefix in [f"{name}=", f"{name.lower()}="]:
+                if cleaned.startswith(prefix):
+                    cleaned = clean_val(cleaned[len(prefix):])
+            if cleaned:
+                return cleaned
     return default
 
 GMAIL_USER = get_env_or_default(["GMAIL_USER"], "doducanhkhoi.bec@gmail.com")
 GMAIL_APP_PASSWORD = get_env_or_default(["GMAIL_APP_PASSWORD"], "wkof rxcj jshh zjql")
 EMAIL_TO = get_env_or_default(["EMAIL_TO"], "doducanhkhoi.bec@gmail.com")
 
+raw_host = get_env_or_default(["MYSQL_HOST", "DB_HOST"], "localhost")
 port_raw = get_env_or_default(["MYSQL_PORT", "DB_PORT"], None)
-MYSQL_HOST = get_env_or_default(["MYSQL_HOST", "DB_HOST"], "localhost")
-if "://" in MYSQL_HOST:
-    MYSQL_HOST = MYSQL_HOST.split("://")[-1]
-if ":" in MYSQL_HOST:
-    parts = MYSQL_HOST.split(":")
-    MYSQL_HOST = parts[0]
-    if not port_raw:
-        port_raw = parts[1].split("/")[0]
-MYSQL_HOST = MYSQL_HOST.strip().rstrip("/")
+
+# Phân tích an toàn nếu user truyền connection string dạng URI hoặc host:port
+if "://" in raw_host:
+    try:
+        parsed = urlparse(raw_host)
+        MYSQL_HOST = parsed.hostname or "localhost"
+        if parsed.port and not port_raw:
+            port_raw = str(parsed.port)
+    except Exception:
+        MYSQL_HOST = raw_host.split("://")[-1].split("@")[-1].split(":")[0].split("/")[0]
+else:
+    if "@" in raw_host:
+        raw_host = raw_host.split("@")[-1]
+    if ":" in raw_host:
+        parts = raw_host.split(":")
+        MYSQL_HOST = parts[0].strip()
+        if not port_raw and len(parts) > 1:
+            port_raw = parts[1].split("/")[0].strip()
+    else:
+        MYSQL_HOST = raw_host.strip().rstrip("/")
 
 if port_raw:
     try:
@@ -105,13 +132,48 @@ THEME_META = {
 }
 
 def get_db_connection():
-    return mysql.connector.connect(
-        host=MYSQL_HOST,
-        port=MYSQL_PORT,
-        user=MYSQL_USER,
-        password=MYSQL_PASSWORD,
-        database=MYSQL_DATABASE
-    )
+    try:
+        conn_kwargs = {
+            "host": MYSQL_HOST,
+            "port": MYSQL_PORT,
+            "user": MYSQL_USER,
+            "password": MYSQL_PASSWORD,
+            "database": MYSQL_DATABASE,
+            "connection_timeout": 25
+        }
+        if "aivencloud" in MYSQL_HOST:
+            conn_kwargs["ssl_disabled"] = False
+        return mysql.connector.connect(**conn_kwargs)
+    except Exception as err:
+        masked_host = MYSQL_HOST
+        if len(masked_host) > 8:
+            masked_host = masked_host[:4] + "..." + masked_host[-4:]
+        print("\n" + "=" * 65)
+        print("[-] LỖI KẾT NỐI CƠ SỞ DỮ LIỆU MYSQL")
+        print("=" * 65)
+        print(f"[*] Target Host    : {masked_host}")
+        print(f"[*] Target Port    : {MYSQL_PORT}")
+        print(f"[*] Target User    : {MYSQL_USER}")
+        print(f"[*] Target DB      : {MYSQL_DATABASE}")
+        print(f"[*] Chi tiết lỗi   : {err}")
+        print("-" * 65)
+        print("[!] NGUYÊN NHÂN & HƯỚNG DẪN KHẮC PHỤC:")
+        err_str = str(err)
+        if "Name or service not known" in err_str or "Errno -2" in err_str:
+            print(" 1. LỖI PHÂN GIẢI DNS (Name or service not known):")
+            print("    - Nếu chạy trên GitHub Actions, bạn KHÔNG THỂ dùng 'localhost' hoặc IP nội bộ (192.168.x.x) vì server GitHub ở trên đám mây.")
+            print("    - Bạn cần dùng Cloud Database (như Aiven MySQL) và điền Hostname dạng: mysql-xxxx.aivencloud.com.")
+            print("    - Kiểm tra GitHub Secret DB_HOST có bị dính 'DB_HOST=', khoảng trắng hoặc dấu nháy kép thừa hay không.")
+            print("    - Nếu muốn chạy với dữ liệu Localhost trên máy tính: Hãy chạy trực tiếp lệnh 'python strategic_report_flow.py' ở terminal máy tính.")
+        elif "Connection refused" in err_str or "2003" in err_str:
+            print(" 1. Máy chủ MySQL từ chối kết nối (Connection refused):")
+            print("    - Kiểm tra port (mặc định 3306 cho local, 18064+ cho Aiven Cloud).")
+            print("    - Đảm bảo service MySQL trên máy chủ đã được bật và mở firewall.")
+        elif "Access denied" in err_str or "1045" in err_str:
+            print(" 1. Sai thông tin đăng nhập (User hoặc Password).")
+            print(" 2. Kiểm tra lại giá trị Secret DB_USER và DB_PASSWORD.")
+        print("=" * 65 + "\n")
+        raise err
 
 def load_state():
     if os.path.exists(STATE_FILE):
