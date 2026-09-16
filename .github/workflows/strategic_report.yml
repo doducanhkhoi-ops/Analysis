@@ -33,10 +33,10 @@ jobs:
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           EMAIL_TO: ${{ secrets.EMAIL_TO }}
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_PORT: ${{ secrets.DB_PORT }}
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_HOST: ${{ secrets.DB_HOST || secrets.MYSQL_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT || secrets.MYSQL_PORT }}
+          DB_USER: ${{ secrets.DB_USER || secrets.MYSQL_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD || secrets.MYSQL_PASSWORD || secrets.DB_PASS }}
+          DB_NAME: ${{ secrets.DB_NAME || secrets.MYSQL_DATABASE }}
         run: |
           python strategic_report_flow.py ${{ github.event.inputs.theme }}
