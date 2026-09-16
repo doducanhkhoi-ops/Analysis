@@ -170,8 +170,15 @@ def get_db_connection():
             print("    - Kiểm tra port (mặc định 3306 cho local, 18064+ cho Aiven Cloud).")
             print("    - Đảm bảo service MySQL trên máy chủ đã được bật và mở firewall.")
         elif "Access denied" in err_str or "1045" in err_str:
-            print(" 1. Sai thông tin đăng nhập (User hoặc Password).")
-            print(" 2. Kiểm tra lại giá trị Secret DB_USER và DB_PASSWORD.")
+            print(" 1. Sai thông tin đăng nhập (User hoặc Password bị MySQL Aiven từ chối).")
+            if MYSQL_PASSWORD == "@Kk1332006":
+                print("    [!] NGUYÊN NHÂN RÕ RÀNG: Script đang dùng mật khẩu mặc định (@Kk1332006) vì GitHub Secret DB_PASSWORD bị RỖNG hoặc đặt sai tên!")
+                print("    -> Vào GitHub Repo: Settings -> Secrets and variables -> Actions.")
+                print("    -> Đảm bảo Secret được tạo trong mục 'Repository secrets' với đúng tên: DB_PASSWORD.")
+            else:
+                print(f"    [*] Độ dài mật khẩu nhận được: {len(MYSQL_PASSWORD)} ký tự.")
+                print(f"    [*] User gửi lên: '{MYSQL_USER}'")
+                print("    -> Hãy vào trang Aiven: bấm vào mục Users -> Reset password cho avnadmin và copy lại mật khẩu mới vào Secret DB_PASSWORD.")
         print("=" * 65 + "\n")
         raise err
 
