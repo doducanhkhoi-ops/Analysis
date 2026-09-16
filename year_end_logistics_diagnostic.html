@@ -1,0 +1,1673 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Olist Executive Diagnostic · Year-End Logistics & Pre-Christmas Paradox</title>
+  <!-- Modern Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  
+  <style>
+    /* ==========================================================================
+       DESIGN TOKENS & AGENTIC STYLING SYSTEM (ANTI-AI-SLOP BESPOKE AESTHETIC)
+       ========================================================================== */
+    :root {
+      --bg-canvas: #090d16;
+      --bg-surface: #0f172a;
+      --bg-card: rgba(17, 24, 39, 0.85);
+      --bg-card-hover: rgba(30, 41, 59, 0.9);
+      --bg-subtle: #1e293b;
+      --bg-glass: rgba(15, 23, 42, 0.75);
+      
+      --border-light: rgba(255, 255, 255, 0.07);
+      --border-focus: rgba(56, 189, 248, 0.4);
+      --border-accent: rgba(16, 185, 129, 0.3);
+      
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      
+      --accent-emerald: #10b981;
+      --accent-emerald-subtle: rgba(16, 185, 129, 0.12);
+      --accent-amber: #f59e0b;
+      --accent-amber-subtle: rgba(245, 158, 11, 0.12);
+      --accent-rose: #f43f5e;
+      --accent-rose-subtle: rgba(244, 63, 94, 0.12);
+      --accent-cyan: #38bdf8;
+      --accent-cyan-subtle: rgba(56, 189, 248, 0.12);
+      --accent-violet: #8b5cf6;
+      
+      --font-ui: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+      --shadow-md: 0 8px 24px -4px rgba(0, 0, 0, 0.5);
+      --shadow-glow-rose: 0 0 20px -5px rgba(244, 63, 94, 0.3);
+      --shadow-glow-cyan: 0 0 20px -5px rgba(56, 189, 248, 0.3);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      font-size: 14px;
+      line-height: 1.6;
+      overflow-x: clip;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Subtle background grid pattern */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.03) 0%, transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(244, 63, 94, 0.03) 0%, transparent 40%),
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 0 24px 80px 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ==========================================================================
+       STICKY AGENTIC NAVIGATION BAR
+       ========================================================================== */
+    .agent-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      background: var(--bg-glass);
+      border-bottom: 1px solid var(--border-light);
+      margin-bottom: 32px;
+    }
+
+    .header-inner {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .agent-branding {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .agent-status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 12px var(--accent-emerald);
+      animation: pulse-dot 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.25); opacity: 0.7; }
+    }
+
+    .agent-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .agent-pill {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-light);
+      color: var(--accent-cyan);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      font-family: var(--font-ui);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      border: 1px solid var(--border-light);
+      background: var(--bg-subtle);
+      color: var(--text-primary);
+    }
+
+    .btn:hover {
+      background: #334155;
+      border-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      border-color: #38bdf8;
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #0369a1, #075985);
+      box-shadow: var(--shadow-glow-cyan);
+    }
+
+    /* ==========================================================================
+       HERO EXECUTIVE BANNER
+       ========================================================================== */
+    .hero-banner {
+      background: linear-gradient(180deg, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.6) 100%);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 36px 36px 32px 36px;
+      margin-bottom: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-banner::after {
+      content: "";
+      position: absolute;
+      top: 0; right: 0;
+      width: 320px; height: 100%;
+      background: radial-gradient(circle at 100% 0%, rgba(244, 63, 94, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .meta-tag-strip {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 4px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .tag-rose { background: var(--accent-rose-subtle); color: var(--accent-rose); border: 1px solid rgba(244, 63, 94, 0.3); }
+    .tag-amber { background: var(--accent-amber-subtle); color: var(--accent-amber); border: 1px solid rgba(245, 158, 11, 0.3); }
+    .tag-cyan { background: var(--accent-cyan-subtle); color: var(--accent-cyan); border: 1px solid rgba(56, 189, 248, 0.3); }
+    .tag-emerald { background: var(--accent-emerald-subtle); color: var(--accent-emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
+
+    .hero-title {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      color: #fff;
+      margin-bottom: 12px;
+      max-width: 980px;
+    }
+
+    .hero-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      max-width: 900px;
+      line-height: 1.65;
+    }
+
+    /* ==========================================================================
+       KPI METRIC CARDS (BESPOKE ASYMMETRIC GRID)
+       ========================================================================== */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      position: relative;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .kpi-card:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .kpi-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .kpi-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    .kpi-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .kpi-value {
+      font-family: var(--font-mono);
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .kpi-subtext {
+      font-size: 12px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .kpi-spark-bar {
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 2px;
+      margin-top: 14px;
+      overflow: hidden;
+    }
+
+    .kpi-spark-fill {
+      height: 100%;
+      border-radius: 2px;
+    }
+
+    /* ==========================================================================
+       TAB SYSTEM
+       ========================================================================== */
+    .tab-navigation {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--border-light);
+      margin-bottom: 28px;
+      padding-bottom: 10px;
+      overflow-x: auto;
+    }
+
+    .tab-button {
+      background: transparent;
+      border: 1px solid transparent;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-family: var(--font-ui);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+
+    .tab-button:hover {
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .tab-button.active {
+      color: #fff;
+      background: var(--bg-subtle);
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .tab-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .tab-button.active .tab-badge {
+      background: var(--accent-cyan);
+      color: #04121d;
+      font-weight: 700;
+    }
+
+    .tab-pane {
+      display: none;
+      animation: fadeIn 0.25s ease-in-out forwards;
+    }
+
+    .tab-pane.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ==========================================================================
+       CONTENT PANELS & CARDS
+       ========================================================================== */
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .grid-balanced {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      position: relative;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .panel-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .panel-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .chart-container {
+      position: relative;
+      height: 320px;
+      width: 100%;
+    }
+
+    /* ==========================================================================
+       PIPELINE STAGE VISUALIZATION
+       ========================================================================== */
+    .pipeline-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .pipeline-stage {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      transition: all 0.2s;
+    }
+
+    .pipeline-stage.bottleneck {
+      border-color: rgba(244, 63, 94, 0.4);
+      background: rgba(244, 63, 94, 0.05);
+      box-shadow: var(--shadow-glow-rose);
+    }
+
+    .stage-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .stage-number {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .stage-details h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+
+    .stage-details p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .stage-metrics {
+      text-align: right;
+    }
+
+    .stage-days {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .stage-days-rose { color: var(--accent-rose); }
+    .stage-days-emerald { color: var(--accent-emerald); }
+
+    .stage-delta {
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+
+    /* ==========================================================================
+       BESPOKE DATA TABLES
+       ========================================================================== */
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      background: rgba(15, 23, 42, 0.7);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+    }
+
+    th {
+      background: rgba(30, 41, 59, 0.5);
+      color: var(--text-secondary);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text-primary);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .mono-cell {
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+
+    .cell-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .table-filter-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      gap: 12px;
+    }
+
+    .search-box {
+      font-family: var(--font-ui);
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      padding: 8px 14px;
+      font-size: 12px;
+      color: #fff;
+      width: 260px;
+      outline: none;
+      transition: border 0.15s;
+    }
+
+    .search-box:focus {
+      border-color: var(--accent-cyan);
+    }
+
+    /* ==========================================================================
+       SQL CODE BLOCKS & CONSOLE
+       ========================================================================== */
+    .sql-block {
+      background: #06090e;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .sql-header {
+      background: #0d131f;
+      padding: 10px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .sql-title {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent-cyan);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    pre code {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.65;
+      padding: 18px;
+      display: block;
+      color: #e2e8f0;
+      overflow-x: auto;
+    }
+
+    .sql-keyword { color: #f43f5e; font-weight: 600; }
+    .sql-function { color: #38bdf8; }
+    .sql-string { color: #34d399; }
+    .sql-comment { color: #64748b; font-style: italic; }
+
+    /* ==========================================================================
+       PLAYBOOK MATRIX
+       ========================================================================== */
+    .playbook-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .playbook-card {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid var(--border-light);
+      border-left: 4px solid var(--accent-cyan);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      transition: all 0.2s;
+    }
+
+    .playbook-card:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+      background: var(--bg-card-hover);
+    }
+
+    .playbook-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .playbook-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .playbook-body {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+
+    .playbook-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 11px;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+    }
+
+    /* Print styling */
+    @media print {
+      body { background: #fff; color: #000; }
+      .agent-header, .btn, .tab-navigation { display: none !important; }
+      .tab-pane { display: block !important; margin-bottom: 40px; page-break-inside: avoid; }
+      .panel { border: 1px solid #ccc; background: #fff; color: #000; box-shadow: none; }
+      th, td { color: #000 !important; }
+    }
+
+    @media (max-width: 1024px) {
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+      .grid-2col, .grid-balanced, .playbook-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .kpi-grid { grid-template-columns: 1fr; }
+      .hero-title { font-size: 22px; }
+      .header-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- STICKY TOP AGENT COMMAND BAR -->
+  <header class="agent-header">
+    <div class="header-inner">
+      <div class="agent-branding">
+        <div class="agent-status-dot"></div>
+        <div class="agent-title">
+          Antigravity Diagnostic Engine
+          <span class="agent-pill">TINH313 · Team 6</span>
+          <span class="agent-pill">v2.4 Live</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn" onclick="window.print()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2M6 14h12v8H6z"/></svg>
+          Print / PDF Export
+        </button>
+        <button class="btn btn-primary" onclick="copyAllSQL()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2M9 2h6a1 1 0 011 1v2a1 1 0 01-1 1H9a1 1 0 01-1-1V3a1 1 0 011-1z"/></svg>
+          Copy All SQL Queries
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- HERO EXECUTIVE BANNER -->
+    <section class="hero-banner">
+      <div class="meta-tag-strip">
+        <span class="tag tag-rose">Logistics Bottleneck</span>
+        <span class="tag tag-amber">Pre-Christmas Sales Collapse</span>
+        <span class="tag tag-cyan">Corpus: olist_raw</span>
+        <span class="tag tag-emerald">Senior Data Analyst POV</span>
+      </div>
+      <h1 class="hero-title">Cơn Đột Quỵ Logistics Black Friday & Sự Sụp Đổ Doanh Thu Mùa Giáng Sinh</h1>
+      <p class="hero-desc">
+        Giải mã toàn diện bức tranh logistics cuối năm 2017: Nút thắt quá tải tại các đối tác bưu chính (Correios) sau đợt Black Friday khiến tỷ lệ trễ hạn tăng vọt x3 lần (lên 16.14%), kích hoạt thuật toán cộng đệm thời gian giao hàng lên 28–32 ngày, trực tiếp làm đóng băng doanh thu mùa Giáng sinh của Olist (-26.9% GMV).
+      </p>
+    </section>
+
+    <!-- 4 BESPOKE KPI HERO CARDS -->
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <span class="kpi-label">Đỉnh Đơn Tháng 11</span>
+          <span class="kpi-badge tag-emerald">+62.9% MoM</span>
+        </div>
+        <div class="kpi-value">7,544</div>
+        <div class="kpi-subtext">Doanh số đạt 1.15M BRL (Black Friday)</div>
+        <div class="kpi-spark-bar">
+          <div class="kpi-spark-fill" style="width: 100%; background: var(--accent-emerald);"></div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <span class="kpi-label">Tỷ Lệ Giao Trễ Tuần Đỉnh</span>
+          <span class="kpi-badge tag-rose">Gấp 4 Lần Thường</span>
+        </div>
+        <div class="kpi-value" style="color: var(--accent-rose);">17.26%</div>
+        <div class="kpi-subtext">Tuần 47 (W47/2017) vs 4.48% ngày thường</div>
+        <div class="kpi-spark-bar">
+          <div class="kpi-spark-fill" style="width: 78%; background: var(--accent-rose);"></div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <span class="kpi-label">Sụt Giảm GMV Tháng 12</span>
+          <span class="kpi-badge tag-amber">-26.9% Crash</span>
+        </div>
+        <div class="kpi-value" style="color: var(--accent-amber);">-310K <span style="font-size: 16px;">BRL</span></div>
+        <div class="kpi-subtext">Doanh thu rơi từ 1.15M về 843K BRL</div>
+        <div class="kpi-spark-bar">
+          <div class="kpi-spark-fill" style="width: 65%; background: var(--accent-amber);"></div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <span class="kpi-label">Điểm Nóng Rio de Janeiro</span>
+          <span class="kpi-badge tag-rose">37.8% Trễ Hạn</span>
+        </div>
+        <div class="kpi-value" style="color: var(--accent-rose);">29.9%</div>
+        <div class="kpi-subtext">Tỷ lệ đánh giá 1 sao (Review Score: 3.33)</div>
+        <div class="kpi-spark-bar">
+          <div class="kpi-spark-fill" style="width: 90%; background: var(--accent-rose);"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE TAB NAVIGATION -->
+    <nav class="tab-navigation">
+      <button class="tab-button active" onclick="switchTab('tab-overview')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18M18 17l-5-5-4 4-4-4"/></svg>
+        1. Chẩn Đoán Toàn Cảnh
+        <span class="tab-badge">Q4/17 - Q1/18</span>
+      </button>
+      <button class="tab-button" onclick="switchTab('tab-pipeline')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        2. Phân Rã Chuỗi Logistics
+        <span class="tab-badge">Bottleneck</span>
+      </button>
+      <button class="tab-button" onclick="switchTab('tab-geo')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 000 20 14.5 14.5 0 000-20M2 12h20"/></svg>
+        3. Khủng Hoảng Cấp Bang
+        <span class="tab-badge">RJ vs SP</span>
+      </button>
+      <button class="tab-button" onclick="switchTab('tab-paradox')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        4. Nghịch Lý Tháng 12 Đóng Băng
+        <span class="tab-badge">Daily Drill-down</span>
+      </button>
+      <button class="tab-button" onclick="switchTab('tab-playbook')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        5. Playbook Khắc Phục
+        <span class="tab-badge">4 Trụ Cột</span>
+      </button>
+      <button class="tab-button" onclick="switchTab('tab-sql')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        6. SQL Console
+        <span class="tab-badge">Verified</span>
+      </button>
+    </nav>
+
+    <!-- ==========================================================================
+         TAB 1: EXECUTIVE OVERVIEW
+         ========================================================================== -->
+    <div id="tab-overview" class="tab-pane active">
+      <div class="grid-2col">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">Tương Quan Doanh Thu & Tỷ Lệ Giao Trễ</h3>
+              <p class="panel-subtitle">Theo dõi GMV (BRL) đối chiếu với % đơn giao vi phạm SLA theo tháng</p>
+            </div>
+            <span class="tag tag-cyan">Dual-Axis Chart</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartOverview"></canvas>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">Giải Phẫu Bức Tranh Kinh Doanh</h3>
+              <p class="panel-subtitle">Chẩn đoán từ Senior Data Analyst Team 6</p>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div style="padding: 14px; background: rgba(16, 185, 129, 0.08); border-left: 3px solid var(--accent-emerald); border-radius: 4px;">
+              <h4 style="color: var(--accent-emerald); font-size: 13px; font-weight: 700; margin-bottom: 4px;">1. Sự Bùng Nổ "Ảo" Tháng 11</h4>
+              <p style="font-size: 12px; color: var(--text-secondary);">
+                Black Friday mang lại kỷ lục 7,544 đơn hàng (+62.9%) và 1.15M BRL GMV. Nhưng đây là áp lực vượt ngưỡng hấp thụ của mạng lưới vận chuyển: 12.37% đơn hàng bị giao trễ hẹn, kéo theo làn sóng phẫn nộ của khách hàng.
+              </p>
+            </div>
+
+            <div style="padding: 14px; background: rgba(244, 63, 94, 0.08); border-left: 3px solid var(--accent-rose); border-radius: 4px;">
+              <h4 style="color: var(--accent-rose); font-size: 13px; font-weight: 700; margin-bottom: 4px;">2. Sự Đổ Vỡ Doanh Thu Tháng 12 (-26.9%)</h4>
+              <p style="font-size: 12px; color: var(--text-secondary);">
+                Khác biệt hoàn toàn với thương mại thế giới, tháng 12 trên Olist mất trắng 310,000 BRL doanh thu. Nguyên nhân: thuật toán SLA bị đẩy lên 28.3 ngày khiến người mua nhận thấy quà Giáng sinh sẽ giao vào tháng 1 năm sau!
+              </p>
+            </div>
+
+            <div style="padding: 14px; background: rgba(56, 189, 248, 0.08); border-left: 3px solid var(--accent-cyan); border-radius: 4px;">
+              <h4 style="color: var(--accent-cyan); font-size: 13px; font-weight: 700; margin-bottom: 4px;">3. Sự Hồi Sinh Ngoạn Mục Tháng 1 (+28.1%)</h4>
+              <p style="font-size: 12px; color: var(--text-secondary);">
+                Tháng 1/2018 bật tăng trở lại 7,269 đơn và 1.08M BRL. Điều này chứng minh sức mua không hề mất đi, mà đã bị "đóng băng tạm thời" trong tháng 12 do rào cản thời gian cam kết giao hàng.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Overview Table -->
+      <div class="panel">
+        <div class="table-filter-bar">
+          <h3 class="panel-title">Dữ Liệu Vận Hành Tháng (Olist Raw Data Extract)</h3>
+          <span class="agent-pill">6 Tháng Giám Sát Trọng Điểm</span>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Tháng (Month)</th>
+                <th>Tổng Đơn</th>
+                <th>Đơn Thành Công</th>
+                <th>Doanh Thu GMV (BRL)</th>
+                <th>Thời Gian Giao TB</th>
+                <th>Thời Gian Ước Tính TB</th>
+                <th>Tỷ Lệ Giao Trễ</th>
+                <th>Trạng Thái SLA</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="mono-cell">2017-09</td>
+                <td class="mono-cell">4,285</td>
+                <td class="mono-cell">4,371</td>
+                <td class="mono-cell">701,169.99</td>
+                <td class="mono-cell">11.7 ngày</td>
+                <td class="mono-cell">23.1 ngày</td>
+                <td class="mono-cell">4.42%</td>
+                <td><span class="cell-badge tag-emerald">ỔN ĐỊNH</span></td>
+              </tr>
+              <tr>
+                <td class="mono-cell">2017-10</td>
+                <td class="mono-cell">4,631</td>
+                <td class="mono-cell">4,698</td>
+                <td class="mono-cell">751,140.27</td>
+                <td class="mono-cell">11.7 ngày</td>
+                <td class="mono-cell">23.7 ngày</td>
+                <td class="mono-cell">4.07%</td>
+                <td><span class="cell-badge tag-emerald">TỐT</span></td>
+              </tr>
+              <tr style="background: rgba(244, 63, 94, 0.06);">
+                <td class="mono-cell" style="color: var(--accent-rose); font-weight: 700;">2017-11 (Peak)</td>
+                <td class="mono-cell">7,544</td>
+                <td class="mono-cell">7,593</td>
+                <td class="mono-cell">1,153,528.05</td>
+                <td class="mono-cell" style="color: var(--accent-rose); font-weight: 700;">15.1 ngày</td>
+                <td class="mono-cell">23.2 ngày</td>
+                <td class="mono-cell" style="color: var(--accent-rose); font-weight: 700;">12.37%</td>
+                <td><span class="cell-badge tag-rose">QUÁ TẢI (SPIKE)</span></td>
+              </tr>
+              <tr style="background: rgba(245, 158, 11, 0.06);">
+                <td class="mono-cell" style="color: var(--accent-amber); font-weight: 700;">2017-12 (Drop)</td>
+                <td class="mono-cell">5,673</td>
+                <td class="mono-cell">5,729</td>
+                <td class="mono-cell">843,199.17</td>
+                <td class="mono-cell">15.3 ngày</td>
+                <td class="mono-cell" style="color: var(--accent-amber); font-weight: 700;">28.3 ngày</td>
+                <td class="mono-cell">7.52%</td>
+                <td><span class="cell-badge tag-amber">SỤP ĐỔ DOANH THU</span></td>
+              </tr>
+              <tr>
+                <td class="mono-cell">2018-01</td>
+                <td class="mono-cell">7,269</td>
+                <td class="mono-cell">7,351</td>
+                <td class="mono-cell">1,078,606.86</td>
+                <td class="mono-cell">14.0 ngày</td>
+                <td class="mono-cell">26.9 ngày</td>
+                <td class="mono-cell">5.67%</td>
+                <td><span class="cell-badge tag-cyan">PHỤC HỒI MẠNH</span></td>
+              </tr>
+              <tr>
+                <td class="mono-cell">2018-02</td>
+                <td class="mono-cell">6,415</td>
+                <td class="mono-cell">6,467</td>
+                <td class="mono-cell">915,503.48</td>
+                <td class="mono-cell">16.9 ngày</td>
+                <td class="mono-cell">25.2 ngày</td>
+                <td class="mono-cell">13.64%</td>
+                <td><span class="cell-badge tag-rose">TRỄ BƯU ĐIỆN T2</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================================================
+         TAB 2: LOGISTICS PIPELINE DECOMPOSITION
+         ========================================================================== -->
+    <div id="tab-pipeline" class="tab-pane">
+      <div class="grid-2col">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">Phân Rã Chuỗi 3 Công Đoạn Thực Thi Đơn</h3>
+              <p class="panel-subtitle">Đo lường sự gia tăng độ trễ tại từng mắt xích vận hành</p>
+            </div>
+          </div>
+          <div class="pipeline-wrapper">
+            <div class="pipeline-stage">
+              <div class="stage-info">
+                <div class="stage-number">01</div>
+                <div class="stage-details">
+                  <h4>Thời Gian Duyệt Đơn (Approval SLA)</h4>
+                  <p>Từ lúc khách bấm mua tới khi hệ thống xác nhận thanh toán</p>
+                </div>
+              </div>
+              <div class="stage-metrics">
+                <div class="stage-days stage-days-emerald">0.56 ngày</div>
+                <div class="stage-delta">Gần như không đổi (Chuẩn 13 giờ)</div>
+              </div>
+            </div>
+
+            <div class="pipeline-stage">
+              <div class="stage-info">
+                <div class="stage-number">02</div>
+                <div class="stage-details">
+                  <h4>Người Bán Chuẩn Bị & Bàn Giao (Seller Dispatch)</h4>
+                  <p>Từ lúc duyệt đơn tới lúc giao kiện hàng cho bưu tá Correios</p>
+                </div>
+              </div>
+              <div class="stage-metrics">
+                <div class="stage-days" style="color: var(--accent-amber);">3.47 ngày</div>
+                <div class="stage-delta">+0.6 ngày (+20.9% so với thường 2.87d)</div>
+              </div>
+            </div>
+
+            <div class="pipeline-stage bottleneck">
+              <div class="stage-info">
+                <div class="stage-number" style="background: var(--accent-rose); color: #fff;">03</div>
+                <div class="stage-details">
+                  <h4 style="color: var(--accent-rose);">Bưu Cục Trung Chuyển (Carrier Transit SLA)</h4>
+                  <p>Thời gian hàng luân chuyển trong mạng lưới bưu chính Correios</p>
+                </div>
+              </div>
+              <div class="stage-metrics">
+                <div class="stage-days stage-days-rose">12.41 ngày</div>
+                <div class="stage-delta" style="color: var(--accent-rose); font-weight: 700;">+3.85 ngày (+44.98% QUÁ TẢI)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">So Sánh Thời Gian Vận Chuyển Theo Giai Đoạn</h3>
+              <p class="panel-subtitle">Stacked Bar Chart minh họa thời gian bưu cục chiếm lĩnh</p>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartPipeline"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Deep Insight Box -->
+      <div class="panel" style="background: rgba(30, 41, 59, 0.4); border-left: 4px solid var(--accent-cyan);">
+        <h3 style="font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 8px;">KẾT LUẬN GIẢI PHẪU CHUỖI CUNG ỨNG:</h3>
+        <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
+          Số liệu chứng minh <strong>Người bán (Sellers) không phải là nguyên nhân chính</strong> gây trễ hạn dịp cuối năm. Độ trễ đóng gói của Seller chỉ tăng thêm 14 giờ. Ngược lại, <strong>toàn bộ sự tắc nghẽn bắt nguồn từ Năng lực Bưu điện (Correios)</strong> khi thời gian trung chuyển phình to từ 8.56 ngày lên 12.41 ngày. Tuy nhiên, thuật toán của Olist đã không điều chỉnh tăng ngày ước tính kịp thời (chỉ tăng từ 22.98 lên 23.94 ngày), trực tiếp biến 16.14% đơn hàng Black Friday thành các ca vi phạm cam kết giao hàng nghiêm trọng.
+        </p>
+      </div>
+    </div>
+
+    <!-- ==========================================================================
+         TAB 3: GEOGRAPHIC CRISIS
+         ========================================================================== -->
+    <div id="tab-geo" class="tab-pane">
+      <div class="grid-2col">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">Điểm Nóng Giao Trễ & Điểm Đánh Giá 1 Sao</h3>
+              <p class="panel-subtitle">Dữ liệu 2 tuần cao điểm Black Friday tại 10 bang lớn</p>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartGeo"></canvas>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">Thảm Họa Rio de Janeiro (RJ)</h3>
+              <p class="panel-subtitle">Thị trường lớn thứ 2 rơi vào khủng hoảng lòng tin</p>
+            </div>
+            <span class="tag tag-rose">CRITICAL STATE</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+              <div style="background: rgba(15, 23, 42, 0.8); padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+                <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Tỷ Lệ Giao Trễ RJ</div>
+                <div style="font-family: var(--font-mono); font-size: 24px; font-weight: 700; color: var(--accent-rose);">37.80%</div>
+                <div style="font-size: 11px; color: var(--text-secondary);">Gần 4/10 đơn bị giao muộn</div>
+              </div>
+              <div style="background: rgba(15, 23, 42, 0.8); padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+                <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Điểm Review TB RJ</div>
+                <div style="font-family: var(--font-mono); font-size: 24px; font-weight: 700; color: var(--accent-amber);">3.33 <span style="font-size: 14px; color: var(--text-muted);">/ 5.0</span></div>
+                <div style="font-size: 11px; color: var(--accent-rose); font-weight: 600;">29.9% khách chấm 1 sao</div>
+              </div>
+            </div>
+
+            <div style="background: rgba(244, 63, 94, 0.05); border: 1px solid rgba(244, 63, 94, 0.2); padding: 14px; border-radius: var(--radius-sm);">
+              <h4 style="font-size: 12px; font-weight: 700; color: var(--accent-rose); margin-bottom: 6px;">TRÍCH DẪN ĐÁNH GIÁ 1 SAO THỰC TẾ:</h4>
+              <p style="font-size: 12px; font-style: italic; color: #fecdd3; line-height: 1.5;">
+                "Comprei duas mochilas, recebi apenas uma, o natal está chegando e até agora nada!"<br>
+                <span style="font-style: normal; color: var(--text-muted); font-size: 11px;">(Dịch: Tôi mua 2 ba lô, nhận được có 1 cái, Giáng sinh đến sát nơi rồi mà đến giờ vẫn bặt vô âm tín!)</span>
+              </p>
+            </div>
+
+            <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.6;">
+              Hạ tầng giao thông và tình trạng kẹt bưu kiện tại RJ đặc biệt nghiêm trọng khiến thời gian bưu cục vận chuyển trung bình lên tới <strong>18.2 ngày</strong>. Hơn 60% khách hàng tại đây sau đó rơi thẳng vào nhóm <em>Lost Customers</em> (rời bỏ nền tảng).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- State Table -->
+      <div class="panel">
+        <div class="table-filter-bar">
+          <h3 class="panel-title">Bảng Số Liệu Vận Hành Cấp Bang (Black Friday 2017)</h3>
+          <input type="text" id="stateSearch" class="search-box" placeholder="Tìm kiếm theo mã Bang (RJ, SP, MG...)" onkeyup="filterStateTable()" />
+        </div>
+        <div class="table-container">
+          <table id="stateTable">
+            <thead>
+              <tr>
+                <th>Bang (State)</th>
+                <th>Số Đơn</th>
+                <th>Seller Dispatch</th>
+                <th>Bưu Cục Luân Chuyển</th>
+                <th>Tổng Ngày Giao TB</th>
+                <th>Ngày Ước Tính</th>
+                <th>Tỷ Lệ Trễ Hạn</th>
+                <th>Điểm Đánh Giá</th>
+                <th>Tỷ Lệ 1 Sao</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background: rgba(244, 63, 94, 0.08);">
+                <td class="mono-cell" style="font-weight: 700; color: var(--accent-rose);">RJ</td>
+                <td class="mono-cell">704</td>
+                <td class="mono-cell">3.6 ngày</td>
+                <td class="mono-cell" style="color: var(--accent-rose); font-weight: 700;">18.2 ngày</td>
+                <td class="mono-cell">22.5 ngày</td>
+                <td class="mono-cell">23.6 ngày</td>
+                <td class="mono-cell" style="color: var(--accent-rose); font-weight: 700;">37.80%</td>
+                <td class="mono-cell" style="color: var(--accent-rose);">3.33</td>
+                <td class="mono-cell" style="color: var(--accent-rose); font-weight: 700;">29.90%</td>
+              </tr>
+              <tr>
+                <td class="mono-cell">CE</td>
+                <td class="mono-cell">63</td>
+                <td class="mono-cell">3.8 ngày</td>
+                <td class="mono-cell">22.4 ngày</td>
+                <td class="mono-cell">26.9 ngày</td>
+                <td class="mono-cell">29.5 ngày</td>
+                <td class="mono-cell">33.33%</td>
+                <td class="mono-cell">3.44</td>
+                <td class="mono-cell">23.81%</td>
+              </tr>
+              <tr>
+                <td class="mono-cell">ES</td>
+                <td class="mono-cell">120</td>
+                <td class="mono-cell">3.8 ngày</td>
+                <td class="mono-cell">14.8 ngày</td>
+                <td class="mono-cell">19.2 ngày</td>
+                <td class="mono-cell">25.0 ngày</td>
+                <td class="mono-cell">24.59%</td>
+                <td class="mono-cell">3.68</td>
+                <td class="mono-cell">18.03%</td>
+              </tr>
+              <tr>
+                <td class="mono-cell">BA</td>
+                <td class="mono-cell">172</td>
+                <td class="mono-cell">3.4 ngày</td>
+                <td class="mono-cell">19.6 ngày</td>
+                <td class="mono-cell">23.6 ngày</td>
+                <td class="mono-cell">29.1 ngày</td>
+                <td class="mono-cell">23.30%</td>
+                <td class="mono-cell">3.83</td>
+                <td class="mono-cell">14.20%</td>
+              </tr>
+              <tr>
+                <td class="mono-cell">SC</td>
+                <td class="mono-cell">188</td>
+                <td class="mono-cell">3.9 ngày</td>
+                <td class="mono-cell">15.3 ngày</td>
+                <td class="mono-cell">19.9 ngày</td>
+                <td class="mono-cell">26.0 ngày</td>
+                <td class="mono-cell">21.81%</td>
+                <td class="mono-cell">3.65</td>
+                <td class="mono-cell">19.15%</td>
+              </tr>
+              <tr>
+                <td class="mono-cell">RS</td>
+                <td class="mono-cell">274</td>
+                <td class="mono-cell">3.3 ngày</td>
+                <td class="mono-cell">16.7 ngày</td>
+                <td class="mono-cell">20.6 ngày</td>
+                <td class="mono-cell">29.8 ngày</td>
+                <td class="mono-cell">17.45%</td>
+                <td class="mono-cell">3.73</td>
+                <td class="mono-cell">19.64%</td>
+              </tr>
+              <tr>
+                <td class="mono-cell">MG</td>
+                <td class="mono-cell">684</td>
+                <td class="mono-cell">3.4 ngày</td>
+                <td class="mono-cell">11.4 ngày</td>
+                <td class="mono-cell">15.4 ngày</td>
+                <td class="mono-cell">25.0 ngày</td>
+                <td class="mono-cell">9.02%</td>
+                <td class="mono-cell">4.05</td>
+                <td class="mono-cell">11.21%</td>
+              </tr>
+              <tr style="background: rgba(16, 185, 129, 0.05);">
+                <td class="mono-cell" style="font-weight: 700; color: var(--accent-emerald);">SP</td>
+                <td class="mono-cell">1,943</td>
+                <td class="mono-cell">3.4 ngày</td>
+                <td class="mono-cell" style="color: var(--accent-emerald); font-weight: 700;">7.1 ngày</td>
+                <td class="mono-cell">11.0 ngày</td>
+                <td class="mono-cell">20.2 ngày</td>
+                <td class="mono-cell">7.60%</td>
+                <td class="mono-cell" style="color: var(--accent-emerald);">4.09</td>
+                <td class="mono-cell">10.71%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================================================
+         TAB 4: PRE-CHRISTMAS PARADOX
+         ========================================================================== -->
+    <div id="tab-paradox" class="tab-pane">
+      <div class="grid-2col">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">Sự Suy Đồi Đơn Hàng Từng Ngày Trong Tháng 12/2017</h3>
+              <p class="panel-subtitle">Đối chiếu Sản lượng đơn vs Số ngày ước tính hiển thị trên web</p>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartDailyDec"></canvas>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">Cơ Chế Nghịch Lý "Tháng 12 Đóng Băng"</h3>
+              <p class="panel-subtitle">Hành vi tâm lý khách hàng mua sắm mùa lễ hội</p>
+            </div>
+            <span class="tag tag-amber">PSYCHOLOGICAL RESISTANCE</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div style="padding: 16px; background: rgba(245, 158, 11, 0.08); border-radius: var(--radius-sm); border: 1px solid rgba(245, 158, 11, 0.2);">
+              <h4 style="font-size: 13px; font-weight: 700; color: var(--accent-amber); margin-bottom: 6px;">1. BẪY THUẬT TOÁN "TỰ VỆ THÁI QUÁ" (OVER-CONSERVATIVE BUFFER)</h4>
+              <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.6;">
+                Khi thấy tỷ lệ trễ Black Friday vọt lên 16%, hệ thống tự động cộng dồn thêm 5.5 ngày an toàn cho mọi đơn tháng 12, nâng mức hẹn giao lên <strong>28 – 32 ngày</strong>.
+              </p>
+            </div>
+
+            <div style="padding: 16px; background: rgba(244, 63, 94, 0.08); border-radius: var(--radius-sm); border: 1px solid rgba(244, 63, 94, 0.2);">
+              <h4 style="font-size: 13px; font-weight: 700; color: var(--accent-rose); margin-bottom: 6px;">2. NỖI SỢ LỠ HẸN GIÁNG SINH (DEADLINE PANIC)</h4>
+              <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.6;">
+                Khách vào Olist ngày 05/12 thấy hẹn nhận hàng ngày <strong>03/01/2018 (sau Giáng sinh)</strong>. Quà lễ hội giao sau ngày 25/12 trở nên vô giá trị. Khách bỏ giỏ hàng hàng loạt và chuyển sang mua trực tiếp tại cửa hàng hoặc Mercado Livre.
+              </p>
+            </div>
+
+            <div style="padding: 14px; background: rgba(15, 23, 42, 0.8); border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 12px; color: var(--text-muted);">Đáy đơn ngày 23/12/2017:</span>
+                <span style="font-family: var(--font-mono); font-size: 18px; font-weight: 700; color: var(--accent-rose);">59 đơn <span style="font-size: 11px; color: var(--text-muted);">(-82.5% so với đầu tháng)</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================================================
+         TAB 5: ACTIONABLE REMEDY PLAYBOOK
+         ========================================================================== -->
+    <div id="tab-playbook" class="tab-pane">
+      <div style="margin-bottom: 24px;">
+        <h3 style="font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 6px;">Chiến Lược 4 Trụ Cột Hóa Giải Rủi Ro Logistics Cuối Năm</h3>
+        <p style="font-size: 13px; color: var(--text-secondary);">Bộ giải pháp thực chiến từ công trình nghiên cứu Nhóm 6 (FTU TINH313) tối ưu hóa GMV và Retention cho Olist.</p>
+      </div>
+
+      <div class="playbook-grid">
+        <div class="playbook-card" style="border-left-color: var(--accent-emerald);">
+          <div class="playbook-header">
+            <h4 class="playbook-title">1. Phân Luồng Vận Tải Đa Đối Tác (Multi-tier Carriers)</h4>
+            <span class="tag tag-emerald">Vận Hành</span>
+          </div>
+          <p class="playbook-body">
+            Xóa bỏ vị thế độc quyền của Bưu điện Correios trong 45 ngày cao điểm cuối năm. Ký hợp đồng thầu phụ với các hãng giao nhanh tư nhân (Loggi, Total Express) phụ trách 40% tải lượng tại khu vực Tam giác vàng (SP - RJ - MG).
+          </p>
+          <div class="playbook-footer">
+            <span>Owner: Head of Logistics</span>
+            <span>Kỳ vọng: Giảm tỷ lệ trễ RJ xuống < 12%</span>
+          </div>
+        </div>
+
+        <div class="playbook-card" style="border-left-color: var(--accent-cyan);">
+          <div class="playbook-header">
+            <h4 class="playbook-title">2. Tinh Chỉnh SLA Tuyến Đường & Quỹ Bảo Hiểm Giáng Sinh</h4>
+            <span class="tag tag-cyan">Thuật Toán</span>
+          </div>
+          <p class="playbook-body">
+            Phân tách thuật toán ước tính SLA: Tuyến nội bang SP-MG giữ nguyên 3-5 ngày và cấp huy hiệu "Cam kết giao trước Giáng sinh". Nếu giao trễ sau 24/12, tặng ngay voucher đền bù 30% giá trị đơn hàng để giữ chân khách hàng lặp lại.
+          </p>
+          <div class="playbook-footer">
+            <span>Owner: Product & Data Science</span>
+            <span>Kỳ vọng: Tăng CR tháng 12 +35%</span>
+          </div>
+        </div>
+
+        <div class="playbook-card" style="border-left-color: var(--accent-amber);">
+          <div class="playbook-header">
+            <h4 class="playbook-title">3. Dịch Chuyển Đỉnh Mua Sắm (Flattening the Curve)</h4>
+            <span class="tag tag-amber">Marketing</span>
+          </div>
+          <p class="playbook-body">
+            Khởi động chiến dịch "Săn Quà Giáng Sinh Sớm" ngay từ 01/11 - 15/11 với ưu đãi tương đương Black Friday. Giảm bớt 25% áp lực dồn toa vào ngày 24/11, giúp hạ tầng bưu cục giãn nhịp xử lý kiện hàng.
+          </p>
+          <div class="playbook-footer">
+            <span>Owner: Chief Marketing Officer</span>
+            <span>Kỳ vọng: Dàn đều 15% GMV sang đầu tháng 11</span>
+          </div>
+        </div>
+
+        <div class="playbook-card" style="border-left-color: var(--accent-rose);">
+          <div class="playbook-header">
+            <h4 class="playbook-title">4. Gói Trả Góp 0% Cho Danh Mục Quà Tặng Cao Cấp</h4>
+            <span class="tag tag-rose">Tài Chính</span>
+          </div>
+          <p class="playbook-body">
+            Đẩy mạnh thanh toán trả góp 10-12 kỳ không lãi suất (payment_installments) cho các ngành hàng quà tặng như Đồng hồ (relogios_presentes) và Mỹ phẩm (beleza_saude). Đòn bẩy giúp đẩy AOV lên > 250 BRL và giữ chân nhóm khách VIP (Can't Lose Them).
+          </p>
+          <div class="playbook-footer">
+            <span>Owner: Head of Commercial & Finance</span>
+            <span>Kỳ vọng: Tăng AOV tháng 12 +18%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================================================
+         TAB 6: SQL TERMINAL
+         ========================================================================== -->
+    <div id="tab-sql" class="tab-pane">
+      <div class="sql-block">
+        <div class="sql-header">
+          <div class="sql-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+            QUERY_01_MONTHLY_LOGISTICS_TREND.SQL
+          </div>
+          <button class="btn" onclick="copyCode('code1')">Copy SQL</button>
+        </div>
+        <pre><code id="code1"><span class="sql-keyword">SELECT</span> 
+    <span class="sql-function">DATE_FORMAT</span>(<span class="sql-function">STR_TO_DATE</span>(o.order_purchase_timestamp, <span class="sql-string">'%Y-%m-%d %H:%i:%s'</span>), <span class="sql-string">'%Y-%m'</span>) <span class="sql-keyword">AS</span> order_month,
+    <span class="sql-function">COUNT</span>(<span class="sql-keyword">DISTINCT</span> o.order_id) <span class="sql-keyword">AS</span> total_orders,
+    <span class="sql-function">SUM</span>(<span class="sql-keyword">CASE WHEN</span> o.order_status = <span class="sql-string">'delivered'</span> <span class="sql-keyword">THEN</span> 1 <span class="sql-keyword">ELSE</span> 0 <span class="sql-keyword">END</span>) <span class="sql-keyword">AS</span> delivered_orders,
+    <span class="sql-function">ROUND</span>(<span class="sql-function">SUM</span>(<span class="sql-keyword">CASE WHEN</span> o.order_status = <span class="sql-string">'delivered'</span> <span class="sql-keyword">THEN</span> p.payment_value <span class="sql-keyword">ELSE</span> 0 <span class="sql-keyword">END</span>), 2) <span class="sql-keyword">AS</span> delivered_gmv_brl,
+    <span class="sql-function">ROUND</span>(<span class="sql-function">AVG</span>(<span class="sql-keyword">CASE WHEN</span> o.order_status = <span class="sql-string">'delivered'</span> <span class="sql-keyword">AND</span> o.order_delivered_customer_date <span class="sql-keyword">IS NOT NULL</span> 
+        <span class="sql-keyword">THEN</span> <span class="sql-function">DATEDIFF</span>(<span class="sql-function">STR_TO_DATE</span>(o.order_delivered_customer_date, <span class="sql-string">'%Y-%m-%d'</span>), <span class="sql-function">STR_TO_DATE</span>(o.order_purchase_timestamp, <span class="sql-string">'%Y-%m-%d'</span>)) <span class="sql-keyword">END</span>), 1) <span class="sql-keyword">AS</span> avg_delivery_days,
+    <span class="sql-function">ROUND</span>(<span class="sql-function">AVG</span>(<span class="sql-keyword">CASE WHEN</span> o.order_status = <span class="sql-string">'delivered'</span> <span class="sql-keyword">AND</span> o.order_estimated_delivery_date <span class="sql-keyword">IS NOT NULL</span> 
+        <span class="sql-keyword">THEN</span> <span class="sql-function">DATEDIFF</span>(<span class="sql-function">STR_TO_DATE</span>(o.order_estimated_delivery_date, <span class="sql-string">'%Y-%m-%d'</span>), <span class="sql-function">STR_TO_DATE</span>(o.order_purchase_timestamp, <span class="sql-string">'%Y-%m-%d'</span>)) <span class="sql-keyword">END</span>), 1) <span class="sql-keyword">AS</span> avg_estimated_days,
+    <span class="sql-function">ROUND</span>(100.0 * <span class="sql-function">SUM</span>(<span class="sql-keyword">CASE WHEN</span> o.order_status = <span class="sql-string">'delivered'</span> <span class="sql-keyword">AND</span> <span class="sql-function">STR_TO_DATE</span>(o.order_delivered_customer_date, <span class="sql-string">'%Y-%m-%d'</span>) > <span class="sql-function">STR_TO_DATE</span>(o.order_estimated_delivery_date, <span class="sql-string">'%Y-%m-%d'</span>) <span class="sql-keyword">THEN</span> 1 <span class="sql-keyword">ELSE</span> 0 <span class="sql-keyword">END</span>) 
+        / <span class="sql-function">NULLIF</span>(<span class="sql-function">SUM</span>(<span class="sql-keyword">CASE WHEN</span> o.order_status = <span class="sql-string">'delivered'</span> <span class="sql-keyword">THEN</span> 1 <span class="sql-keyword">ELSE</span> 0 <span class="sql-keyword">END</span>), 0), 2) <span class="sql-keyword">AS</span> late_delivery_pct
+<span class="sql-keyword">FROM</span> olist_raw.orders o
+<span class="sql-keyword">LEFT JOIN</span> olist_raw.payments p <span class="sql-keyword">ON</span> o.order_id = p.order_id
+<span class="sql-keyword">WHERE</span> o.order_purchase_timestamp >= <span class="sql-string">'2017-09-01'</span> <span class="sql-keyword">AND</span> o.order_purchase_timestamp <= <span class="sql-string">'2018-02-28'</span>
+<span class="sql-keyword">GROUP BY</span> order_month
+<span class="sql-keyword">ORDER BY</span> order_month;</code></pre>
+      </div>
+
+      <div class="sql-block">
+        <div class="sql-header">
+          <div class="sql-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+            QUERY_02_PIPELINE_STAGES_DECOMPOSITION.SQL
+          </div>
+          <button class="btn" onclick="copyCode('code2')">Copy SQL</button>
+        </div>
+        <pre><code id="code2"><span class="sql-keyword">SELECT</span> 
+    <span class="sql-keyword">CASE</span> 
+        <span class="sql-keyword">WHEN</span> <span class="sql-function">STR_TO_DATE</span>(order_purchase_timestamp, <span class="sql-string">'%Y-%m-%d'</span>) <span class="sql-keyword">BETWEEN</span> <span class="sql-string">'2017-10-15'</span> <span class="sql-keyword">AND</span> <span class="sql-string">'2017-11-12'</span> <span class="sql-keyword">THEN</span> <span class="sql-string">'1. Normal Period'</span>
+        <span class="sql-keyword">WHEN</span> <span class="sql-function">STR_TO_DATE</span>(order_purchase_timestamp, <span class="sql-string">'%Y-%m-%d'</span>) <span class="sql-keyword">BETWEEN</span> <span class="sql-string">'2017-11-20'</span> <span class="sql-keyword">AND</span> <span class="sql-string">'2017-12-03'</span> <span class="sql-keyword">THEN</span> <span class="sql-string">'2. Black Friday Peak'</span>
+        <span class="sql-keyword">WHEN</span> <span class="sql-function">STR_TO_DATE</span>(order_purchase_timestamp, <span class="sql-string">'%Y-%m-%d'</span>) <span class="sql-keyword">BETWEEN</span> <span class="sql-string">'2017-12-04'</span> <span class="sql-keyword">AND</span> <span class="sql-string">'2017-12-31'</span> <span class="sql-keyword">THEN</span> <span class="sql-string">'3. Holiday Season'</span>
+    <span class="sql-keyword">END AS</span> period_name,
+    <span class="sql-function">COUNT</span>(*) <span class="sql-keyword">AS</span> total_delivered_orders,
+    <span class="sql-function">ROUND</span>(<span class="sql-function">AVG</span>(<span class="sql-function">DATEDIFF</span>(<span class="sql-function">STR_TO_DATE</span>(order_approved_at, <span class="sql-string">'%Y-%m-%d'</span>), <span class="sql-function">STR_TO_DATE</span>(order_purchase_timestamp, <span class="sql-string">'%Y-%m-%d'</span>))), 2) <span class="sql-keyword">AS</span> avg_days_to_approve,
+    <span class="sql-function">ROUND</span>(<span class="sql-function">AVG</span>(<span class="sql-function">DATEDIFF</span>(<span class="sql-function">STR_TO_DATE</span>(order_delivered_carrier_date, <span class="sql-string">'%Y-%m-%d'</span>), <span class="sql-function">STR_TO_DATE</span>(order_approved_at, <span class="sql-string">'%Y-%m-%d'</span>))), 2) <span class="sql-keyword">AS</span> avg_days_to_carrier,
+    <span class="sql-function">ROUND</span>(<span class="sql-function">AVG</span>(<span class="sql-function">DATEDIFF</span>(<span class="sql-function">STR_TO_DATE</span>(order_delivered_customer_date, <span class="sql-string">'%Y-%m-%d'</span>), <span class="sql-function">STR_TO_DATE</span>(order_delivered_carrier_date, <span class="sql-string">'%Y-%m-%d'</span>))), 2) <span class="sql-keyword">AS</span> avg_days_carrier_to_customer,
+    <span class="sql-function">ROUND</span>(<span class="sql-function">AVG</span>(<span class="sql-function">DATEDIFF</span>(<span class="sql-function">STR_TO_DATE</span>(order_delivered_customer_date, <span class="sql-string">'%Y-%m-%d'</span>), <span class="sql-function">STR_TO_DATE</span>(order_purchase_timestamp, <span class="sql-string">'%Y-%m-%d'</span>))), 2) <span class="sql-keyword">AS</span> avg_total_delivery_days,
+    <span class="sql-function">ROUND</span>(100.0 * <span class="sql-function">SUM</span>(<span class="sql-keyword">CASE WHEN</span> <span class="sql-function">STR_TO_DATE</span>(order_delivered_customer_date, <span class="sql-string">'%Y-%m-%d'</span>) > <span class="sql-function">STR_TO_DATE</span>(order_estimated_delivery_date, <span class="sql-string">'%Y-%m-%d'</span>) <span class="sql-keyword">THEN</span> 1 <span class="sql-keyword">ELSE</span> 0 <span class="sql-keyword">END</span>) / <span class="sql-function">COUNT</span>(*), 2) <span class="sql-keyword">AS</span> late_delivery_pct
+<span class="sql-keyword">FROM</span> olist_raw.orders
+<span class="sql-keyword">WHERE</span> order_status = <span class="sql-string">'delivered'</span>
+  <span class="sql-keyword">AND</span> order_delivered_customer_date <span class="sql-keyword">IS NOT NULL</span> 
+  <span class="sql-keyword">AND</span> order_delivered_carrier_date <span class="sql-keyword">IS NOT NULL</span>
+  <span class="sql-keyword">AND</span> order_approved_at <span class="sql-keyword">IS NOT NULL</span>
+  <span class="sql-keyword">AND</span> order_purchase_timestamp >= <span class="sql-string">'2017-10-15'</span> <span class="sql-keyword">AND</span> order_purchase_timestamp <= <span class="sql-string">'2017-12-31'</span>
+<span class="sql-keyword">GROUP BY</span> period_name
+<span class="sql-keyword">HAVING</span> period_name <span class="sql-keyword">IS NOT NULL</span>;</code></pre>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- JAVASCRIPT LOGIC & CHART RENDERERS -->
+  <script>
+    // Tab switcher
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+      
+      const targetBtn = Array.from(document.querySelectorAll('.tab-button')).find(btn => btn.getAttribute('onclick').includes(tabId));
+      if (targetBtn) targetBtn.classList.add('active');
+      
+      const targetPane = document.getElementById(tabId);
+      if (targetPane) targetPane.classList.add('active');
+    }
+
+    // Copy SQL functions
+    function copyCode(elementId) {
+      const text = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Đã sao chép câu lệnh SQL vào bộ nhớ đệm!');
+      });
+    }
+
+    function copyAllSQL() {
+      const code1 = document.getElementById('code1').innerText;
+      const code2 = document.getElementById('code2').innerText;
+      navigator.clipboard.writeText(code1 + '\n\n-- ==========================================\n\n' + code2).then(() => {
+        alert('Đã sao chép toàn bộ các câu lệnh SQL vào clipboard!');
+      });
+    }
+
+    // Table Filter
+    function filterStateTable() {
+      const input = document.getElementById('stateSearch');
+      const filter = input.value.toUpperCase();
+      const table = document.getElementById('stateTable');
+      const tr = table.getElementsByTagName('tr');
+
+      for (let i = 1; i < tr.length; i++) {
+        const td = tr[i].getElementsByTagName('td')[0];
+        if (td) {
+          const txtValue = td.textContent || td.innerText;
+          tr[i].style.display = txtValue.toUpperCase().indexOf(filter) > -1 ? '' : 'none';
+        }
+      }
+    }
+
+    // Chart.js Setup with Dark Agentic Design
+    document.addEventListener('DOMContentLoaded', () => {
+      Chart.defaults.color = '#94a3b8';
+      Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
+
+      // 1. Chart Overview
+      const ctxOverview = document.getElementById('chartOverview').getContext('2d');
+      new Chart(ctxOverview, {
+        type: 'bar',
+        data: {
+          labels: ['T9/17', 'T10/17', 'T11/17 (Peak)', 'T12/17 (Drop)', 'T1/18 (Rebound)', 'T2/18'],
+          datasets: [
+            {
+              type: 'bar',
+              label: 'Doanh thu GMV (Triệu BRL)',
+              data: [0.70, 0.75, 1.15, 0.84, 1.08, 0.92],
+              backgroundColor: 'rgba(56, 189, 248, 0.25)',
+              borderColor: '#38bdf8',
+              borderWidth: 1.5,
+              borderRadius: 4,
+              yAxisID: 'y'
+            },
+            {
+              type: 'line',
+              label: 'Tỷ lệ giao trễ (%)',
+              data: [4.42, 4.07, 12.37, 7.52, 5.67, 13.64],
+              borderColor: '#f43f5e',
+              backgroundColor: '#f43f5e',
+              borderWidth: 2.5,
+              pointRadius: 4,
+              pointHoverRadius: 6,
+              tension: 0.3,
+              yAxisID: 'y1'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          scales: {
+            y: {
+              type: 'linear',
+              position: 'left',
+              grid: { color: 'rgba(255, 255, 255, 0.05)' },
+              ticks: { callback: v => v + 'M' }
+            },
+            y1: {
+              type: 'linear',
+              position: 'right',
+              grid: { drawOnChartArea: false },
+              ticks: { callback: v => v + '%' }
+            },
+            x: {
+              grid: { color: 'rgba(255, 255, 255, 0.05)' }
+            }
+          },
+          plugins: {
+            legend: { position: 'top', labels: { boxWidth: 12 } }
+          }
+        }
+      });
+
+      // 2. Chart Pipeline Stages
+      const ctxPipeline = document.getElementById('chartPipeline').getContext('2d');
+      new Chart(ctxPipeline, {
+        type: 'bar',
+        data: {
+          labels: ['Bình thường (T10)', 'Đỉnh Black Friday (T11)', 'Mùa Giáng sinh (T12)'],
+          datasets: [
+            {
+              label: 'Duyệt đơn (Approval)',
+              data: [0.50, 0.56, 0.53],
+              backgroundColor: '#10b981'
+            },
+            {
+              label: 'Người bán đóng gói (Seller)',
+              data: [2.87, 3.47, 3.03],
+              backgroundColor: '#f59e0b'
+            },
+            {
+              label: 'Bưu cục trung chuyển (Carrier Transit)',
+              data: [8.56, 12.41, 11.67],
+              backgroundColor: '#f43f5e'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { stacked: true, grid: { color: 'rgba(255, 255, 255, 0.05)' } },
+            y: { stacked: true, grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { callback: v => v + ' ngày' } }
+          },
+          plugins: {
+            legend: { position: 'top', labels: { boxWidth: 12 } }
+          }
+        }
+      });
+
+      // 3. Chart Geographic Crisis
+      const ctxGeo = document.getElementById('chartGeo').getContext('2d');
+      new Chart(ctxGeo, {
+        type: 'bar',
+        data: {
+          labels: ['RJ', 'CE', 'ES', 'BA', 'SC', 'RS', 'GO', 'MG', 'SP'],
+          datasets: [
+            {
+              label: 'Tỷ lệ giao trễ (%)',
+              data: [37.80, 33.33, 24.59, 23.30, 21.81, 17.45, 16.83, 9.02, 7.60],
+              backgroundColor: 'rgba(244, 63, 94, 0.65)',
+              borderColor: '#f43f5e',
+              borderWidth: 1,
+              borderRadius: 4
+            },
+            {
+              label: 'Tỷ lệ đánh giá 1 sao (%)',
+              data: [29.90, 23.81, 18.03, 14.20, 19.15, 19.64, 14.85, 11.21, 10.71],
+              backgroundColor: 'rgba(245, 158, 11, 0.65)',
+              borderColor: '#f59e0b',
+              borderWidth: 1,
+              borderRadius: 4
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { callback: v => v + '%' } },
+            x: { grid: { color: 'rgba(255, 255, 255, 0.05)' } }
+          },
+          plugins: {
+            legend: { position: 'top', labels: { boxWidth: 12 } }
+          }
+        }
+      });
+
+      // 4. Chart Daily December Drop
+      const ctxDailyDec = document.getElementById('chartDailyDec').getContext('2d');
+      new Chart(ctxDailyDec, {
+        type: 'line',
+        data: {
+          labels: ['01/12', '04/12', '07/12', '10/12', '13/12', '16/12', '19/12', '22/12', '23/12 (Đáy)', '25/12'],
+          datasets: [
+            {
+              label: 'Số đơn đặt hàng trong ngày',
+              data: [275, 337, 219, 267, 200, 133, 171, 109, 59, 168],
+              borderColor: '#38bdf8',
+              backgroundColor: 'rgba(56, 189, 248, 0.1)',
+              fill: true,
+              borderWidth: 2,
+              tension: 0.35,
+              yAxisID: 'y'
+            },
+            {
+              label: 'Ngày hẹn giao hiển thị (Buffer)',
+              data: [28.1, 26.0, 28.4, 27.2, 28.8, 27.8, 29.1, 32.2, 30.0, 28.1],
+              borderColor: '#f43f5e',
+              borderWidth: 2,
+              borderDash: [5, 5],
+              pointRadius: 3,
+              yAxisID: 'y1'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, title: { display: true, text: 'Số đơn / ngày' } },
+            y1: { position: 'right', grid: { drawOnChartArea: false }, title: { display: true, text: 'Ngày hẹn giao' }, ticks: { callback: v => v + 'd' } },
+            x: { grid: { color: 'rgba(255, 255, 255, 0.05)' } }
+          },
+          plugins: {
+            legend: { position: 'top', labels: { boxWidth: 12 } }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Báo Cáo Chẩn Đoán Chuyên Sâu · Ma Trận Tài Chính Thanh Toán & Nghịch Lý Trả Góp 10 Kỳ</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <style>
+    /* ==========================================================================
+       DESIGN SYSTEM: BESPOKE AGENTIC MIDNIGHT SLATE (ANTI-AI-SLOP)
+       Power BI Midnight Slate Layout + Excel Pivot Deep Causal Architecture
+       ========================================================================== */
+    :root {
+      --bg-canvas: #060911;
+      --bg-surface: #0c1322;
+      --bg-card: rgba(14, 21, 37, 0.9);
+      --bg-card-hover: rgba(22, 33, 56, 0.95);
+      --bg-subtle: #172338;
+      --bg-glass: rgba(12, 19, 34, 0.88);
+
+      --border-light: rgba(255, 255, 255, 0.08);
+      --border-focus: rgba(56, 189, 248, 0.5);
+      --border-gold: rgba(245, 158, 11, 0.45);
+
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+
+      --accent-emerald: #10b981;
+      --accent-emerald-subtle: rgba(16, 185, 129, 0.12);
+      --accent-amber: #f59e0b;
+      --accent-amber-subtle: rgba(245, 158, 11, 0.12);
+      --accent-rose: #f43f5e;
+      --accent-rose-subtle: rgba(244, 63, 94, 0.14);
+      --accent-cyan: #38bdf8;
+      --accent-cyan-subtle: rgba(56, 189, 248, 0.12);
+      --accent-indigo: #6366f1;
+      --accent-gold: #fbbf24;
+
+      --font-ui: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+      --shadow-md: 0 10px 30px -5px rgba(0, 0, 0, 0.6);
+      --shadow-glow-gold: 0 0 24px -4px rgba(245, 158, 11, 0.35);
+      --shadow-glow-rose: 0 0 24px -4px rgba(244, 63, 94, 0.35);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      font-size: 14px;
+      line-height: 1.6;
+      overflow-x: clip;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Asymmetric subtle pattern */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-image: 
+        radial-gradient(circle at 12% 18%, rgba(99, 102, 241, 0.05) 0%, transparent 45%),
+        radial-gradient(circle at 88% 82%, rgba(245, 158, 11, 0.04) 0%, transparent 40%),
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1420px;
+      margin: 0 auto;
+      padding: 0 24px 80px 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ==========================================================================
+       TOP COMMAND BAR
+       ========================================================================== */
+    .agent-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(18px);
+      background: var(--bg-glass);
+      border-bottom: 1px solid var(--border-light);
+      margin-bottom: 28px;
+    }
+
+    .header-inner {
+      max-width: 1420px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .agent-branding {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .agent-status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent-gold);
+      box-shadow: 0 0 14px var(--accent-gold);
+      animation: pulse-gold 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse-gold {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.25); opacity: 0.7; }
+    }
+
+    .agent-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .agent-pill {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-light);
+      color: var(--accent-cyan);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      font-family: var(--font-ui);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      border: 1px solid var(--border-light);
+      background: var(--bg-subtle);
+      color: var(--text-primary);
+    }
+
+    .btn:hover {
+      background: #334155;
+      border-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-1px);
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #d97706, #b45309);
+      border-color: #f59e0b;
+      color: #fff;
+    }
+    .btn-gold:hover {
+      background: linear-gradient(135deg, #b45309, #92400e);
+      box-shadow: var(--shadow-glow-gold);
+    }
+
+    /* ==========================================================================
+       DYNAMIC SLICER PANEL (POWER BI EXPERT GRADE)
+       ========================================================================== */
+    .slicer-panel {
+      background: rgba(14, 21, 37, 0.95);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: var(--radius-md);
+      padding: 18px 24px;
+      margin-bottom: 28px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .slicer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .slicer-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent-gold);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .slicer-reset {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      cursor: pointer;
+      text-decoration: underline;
+      background: none;
+      border: none;
+    }
+    .slicer-reset:hover { color: var(--text-primary); }
+
+    .slicer-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .slicer-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-right: 6px;
+    }
+
+    .slicer-btn {
+      font-family: var(--font-ui);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 13px;
+      border-radius: 20px;
+      border: 1px solid var(--border-light);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .slicer-btn:hover {
+      background: rgba(255, 255, 255, 0.09);
+      color: #fff;
+    }
+
+    .slicer-btn.active {
+      background: var(--accent-gold);
+      color: #050a14;
+      font-weight: 700;
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+    }
+
+    /* ==========================================================================
+       HERO EXECUTIVE BANNER
+       ========================================================================== */
+    .hero-banner {
+      background: linear-gradient(180deg, rgba(22, 33, 56, 0.45) 0%, rgba(12, 19, 34, 0.75) 100%);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 34px 36px 30px 36px;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-banner::after {
+      content: "";
+      position: absolute;
+      top: 0; right: 0;
+      width: 380px; height: 100%;
+      background: radial-gradient(circle at 100% 0%, rgba(245, 158, 11, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .meta-tag-strip {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 4px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .tag-gold { background: var(--accent-amber-subtle); color: var(--accent-gold); border: 1px solid rgba(245, 158, 11, 0.3); }
+    .tag-rose { background: var(--accent-rose-subtle); color: var(--accent-rose); border: 1px solid rgba(244, 63, 94, 0.3); }
+    .tag-cyan { background: var(--accent-cyan-subtle); color: var(--accent-cyan); border: 1px solid rgba(56, 189, 248, 0.3); }
+    .tag-emerald { background: var(--accent-emerald-subtle); color: var(--accent-emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
+
+    .hero-title {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      color: #fff;
+      margin-bottom: 10px;
+      max-width: 1050px;
+    }
+
+    .hero-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      max-width: 980px;
+      line-height: 1.65;
+    }
+
+    /* ==========================================================================
+       DYNAMIC KPI CARDS
+       ========================================================================== */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      position: relative;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .kpi-card:hover {
+      border-color: rgba(255, 255, 255, 0.16);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .kpi-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .kpi-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    .kpi-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .kpi-value {
+      font-family: var(--font-mono);
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .kpi-subtext {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .kpi-spark-bar {
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 2px;
+      margin-top: 14px;
+      overflow: hidden;
+    }
+
+    .kpi-spark-fill { height: 100%; border-radius: 2px; }
+
+    /* ==========================================================================
+       TAB NAVIGATION
+       ========================================================================== */
+    .tab-navigation {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--border-light);
+      margin-bottom: 24px;
+      padding-bottom: 10px;
+      overflow-x: auto;
+    }
+
+    .tab-button {
+      background: transparent;
+      border: 1px solid transparent;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-family: var(--font-ui);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+
+    .tab-button:hover {
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .tab-button.active {
+      color: #fff;
+      background: var(--bg-subtle);
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+    }
+
+    .tab-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .tab-button.active .tab-badge {
+      background: var(--accent-gold);
+      color: #04121d;
+      font-weight: 700;
+    }
+
+    .tab-pane {
+      display: none;
+      animation: fadeIn 0.22s ease-in-out forwards;
+    }
+
+    .tab-pane.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ==========================================================================
+       PANELS & CAUSAL BRIDGES
+       ========================================================================== */
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 22px;
+      margin-bottom: 22px;
+    }
+
+    .grid-balanced {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      margin-bottom: 22px;
+    }
+
+    .panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      position: relative;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .panel-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .panel-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .chart-container {
+      position: relative;
+      height: 330px;
+      width: 100%;
+    }
+
+    /* Analytical Causal Bridge Container */
+    .causal-bridge {
+      background: rgba(245, 158, 11, 0.05);
+      border-left: 3px solid var(--accent-gold);
+      border-radius: 4px;
+      padding: 14px 18px;
+      margin-bottom: 22px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    .causal-bridge strong { color: var(--accent-gold); }
+
+    /* ==========================================================================
+       DATA TABLES
+       ========================================================================== */
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      background: rgba(12, 19, 34, 0.8);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+    }
+
+    th {
+      background: rgba(23, 35, 56, 0.7);
+      color: var(--text-secondary);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text-primary);
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255, 255, 255, 0.025); }
+
+    .mono-cell { font-family: var(--font-mono); font-size: 12px; }
+
+    .cell-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    /* ==========================================================================
+       SQL CODE BLOCKS
+       ========================================================================== */
+    .sql-block {
+      background: #05080f;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .sql-header {
+      background: #0a1120;
+      padding: 10px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .sql-title {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent-gold);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    pre code {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.65;
+      padding: 18px;
+      display: block;
+      color: #e2e8f0;
+      overflow-x: auto;
+    }
+
+    .sql-keyword { color: #f43f5e; font-weight: 600; }
+    .sql-function { color: #38bdf8; }
+    .sql-string { color: #34d399; }
+
+    @media print {
+      body { background: #fff; color: #000; }
+      .agent-header, .btn, .tab-navigation, .slicer-panel { display: none !important; }
+      .tab-pane { display: block !important; margin-bottom: 40px; page-break-inside: avoid; }
+      .panel { border: 1px solid #ccc; background: #fff; color: #000; box-shadow: none; }
+      th, td { color: #000 !important; }
+    }
+
+    @media (max-width: 1024px) {
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+      .grid-2col, .grid-balanced { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .kpi-grid { grid-template-columns: 1fr; }
+      .hero-title { font-size: 22px; }
+      .header-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- STICKY AGENT COMMAND BAR -->
+  <header class="agent-header">
+    <div class="header-inner">
+      <div class="agent-branding">
+        <div class="agent-status-dot"></div>
+        <div class="agent-title">
+          Financial Diagnostics Engine
+          <span class="agent-pill">TINH313 · Team 6</span>
+          <span class="agent-pill">Deep Causal Architecture</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn" onclick="window.print()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2M6 14h12v8H6z"/></svg>
+          In ấn / Xuất PDF
+        </button>
+        <button class="btn btn-gold" onclick="copyAllSQL()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2M9 2h6a1 1 0 011 1v2a1 1 0 01-1 1H9a1 1 0 01-1-1V3a1 1 0 011-1z"/></svg>
+          Sao chép toàn bộ SQL
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- HERO EXECUTIVE BANNER -->
+    <section class="hero-banner">
+      <div class="meta-tag-strip">
+        <span class="tag tag-gold">Payment Financing Matrix</span>
+        <span class="tag tag-rose">The 10-Installment Paradox</span>
+        <span class="tag tag-cyan">Boleto 42.5h Lag</span>
+        <span class="tag tag-emerald">Pure Causal Diagnosis</span>
+      </div>
+      <h1 class="hero-title">Báo Cáo Chẩn Đoán Căn Nguyên: Nghịch Lý Trả Góp 10 Kỳ & Điểm Gãy Trải Nghiệm Khách Hàng</h1>
+      <p class="hero-desc">
+        Khảo cứu chuyên sâu mổ xẻ toàn diện cơ cấu thanh toán vi mô và hành vi tài khóa trên Olist: Trả góp 10 kỳ là cỗ máy kéo AOV đạt 413.83 BRL (gấp 4.3 lần đơn 1 kỳ, mang về 2.22M BRL GMV) nhưng lại là ổ bệnh bất mãn lớn nhất sàn (tỷ lệ 1 sao tăng +43.5%, review tụt xuống đáy 3.96). Từng phát hiện được kết nối mạch lạc theo chuỗi nhân quả chặt chẽ.
+      </p>
+    </section>
+
+    <!-- SLICER: PHƯƠNG THỨC THANH TOÁN -->
+    <section class="slicer-panel">
+      <div class="slicer-header">
+        <div class="slicer-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+          Slicer: Phương thức thanh toán
+        </div>
+        <button class="slicer-reset" onclick="resetSlicers()">Đặt lại (Tất cả)</button>
+      </div>
+      <div class="slicer-group">
+        <span class="slicer-label">Phương thức:</span>
+        <button class="slicer-btn active" onclick="filterByPayment('all', this)">Tất cả (98,206 đơn)</button>
+        <button class="slicer-btn" onclick="filterByPayment('credit_card', this)">Thẻ tín dụng (76,505)</button>
+        <button class="slicer-btn" onclick="filterByPayment('boleto', this)">Boleto (19,784)</button>
+        <button class="slicer-btn" onclick="filterByPayment('voucher', this)">Voucher (3,866)</button>
+        <button class="slicer-btn" onclick="filterByPayment('debit_card', this)">Thẻ ghi nợ (1,528)</button>
+      </div>
+      <div id="slicer-status-bar" style="margin-top: 10px; font-size: 11px; color: var(--text-muted); font-family: var(--font-mono); display: flex; align-items: center; gap: 8px;">
+        <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--accent-emerald);"></span>
+        <span id="slicer-status-text">Phạm vi: <strong>Toàn sàn (98,206 đơn)</strong> — Biểu đồ phân bổ và đồ thị đối chuẩn phản hồi theo bộ lọc</span>
+      </div>
+    </section>
+
+    <!-- DYNAMIC KPI HERO CARDS -->
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <span class="kpi-label" id="kpiLabel1">AOV Đơn Trả Góp 10 Kỳ</span>
+          <span class="kpi-badge tag-gold" id="kpiBadge1">Gấp 4.3x Đơn 1 Kỳ</span>
+        </div>
+        <div class="kpi-value" style="color: var(--accent-gold);" id="kpiVal1">413.83 <span style="font-size: 16px;">BRL</span></div>
+        <div class="kpi-subtext" id="kpiSub1">5,315 đơn đóng góp 2,225,164 BRL GMV</div>
+        <div class="kpi-spark-bar">
+          <div class="kpi-spark-fill" style="width: 100%; background: var(--accent-gold);"></div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <span class="kpi-label" id="kpiLabel2">Tỷ Lệ 1 Sao Đơn 10 Kỳ</span>
+          <span class="kpi-badge tag-rose" id="kpiBadge2">+43.5% Độ Bất Mãn</span>
+        </div>
+        <div class="kpi-value" style="color: var(--accent-rose);" id="kpiVal2">14.94%</div>
+        <div class="kpi-subtext" id="kpiSub2">Review rơi xuống 3.96 (so với 4.15 của 1 kỳ)</div>
+        <div class="kpi-spark-bar">
+          <div class="kpi-spark-fill" style="width: 82%; background: var(--accent-rose);"></div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <span class="kpi-label">Độ Trễ Phê Duyệt Boleto</span>
+          <span class="kpi-badge tag-amber">42.5 Giờ Chờ Đợi</span>
+        </div>
+        <div class="kpi-value" style="color: var(--accent-cyan);">1.77 <span style="font-size: 16px;">ngày</span></div>
+        <div class="kpi-subtext">19,784 đơn (18% GMV) chậm hơn thẻ 9 lần</div>
+        <div class="kpi-spark-bar">
+          <div class="kpi-spark-fill" style="width: 70%; background: var(--accent-cyan);"></div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <span class="kpi-label">Tỷ Lệ Hủy Đơn Voucher</span>
+          <span class="kpi-badge tag-rose">Gấp 5.1x Thẻ Tín Dụng</span>
+        </div>
+        <div class="kpi-value" style="color: var(--accent-rose);">2.97%</div>
+        <div class="kpi-subtext">Hội chứng bồi thường thất bại</div>
+        <div class="kpi-spark-bar">
+          <div class="kpi-spark-fill" style="width: 60%; background: var(--accent-rose);"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB NAVIGATION -->
+    <nav class="tab-navigation">
+      <button class="tab-button active" onclick="switchTab('tab-macro')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        1. Cơ Cấu 4 Phương Thức
+        <span class="tab-badge">Bảng 1</span>
+      </button>
+      <button class="tab-button" onclick="switchTab('tab-installments')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        2. Nghịch Lý Trả Góp 10 Kỳ
+        <span class="tab-badge">Bảng 2</span>
+      </button>
+      <button class="tab-button" onclick="switchTab('tab-categories')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+        3. Phân Rã Ngành Hàng 10 Kỳ
+        <span class="tab-badge">Bảng 3</span>
+      </button>
+      <button class="tab-button" onclick="switchTab('tab-crosstab')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        4. Ma Trận SLA x Kỳ Hạn x Review
+        <span class="tab-badge">Bảng 4</span>
+      </button>
+      <button class="tab-button" onclick="switchTab('tab-diagnosis')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+        5. Định Vị Căn Bệnh Cốt Lõi
+        <span class="tab-badge" style="background: rgba(244, 63, 94, 0.2); color: var(--accent-rose);">Chẩn Đoán</span>
+      </button>
+      <button class="tab-button" onclick="switchTab('tab-sql')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        6. Bộ SQL Console
+        <span class="tab-badge">Raw Data</span>
+      </button>
+    </nav>
+
+    <!-- ==========================================================================
+         TAB 1: PHƯƠNG THỨC THANH TOÁN (BẢNG 1)
+         ========================================================================== -->
+    <div id="tab-macro" class="tab-pane active">
+      <div class="grid-2col">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">Thị Phần Doanh Thu GMV Giữa 4 Phương Thức</h3>
+              <p class="panel-subtitle">Doughnut Visual mô tả tỷ trọng dòng tiền thực tế</p>
+            </div>
+            <span class="tag tag-gold">Doughnut Share</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartPaymentShare"></canvas>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">Phân Tích Chi Tiết 4 Phương Thức Thanh Toán</h3>
+              <p class="panel-subtitle">Nhận diện điểm nghẽn thanh toán</p>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="padding: 12px; background: rgba(99, 102, 241, 0.08); border-left: 3px solid var(--accent-indigo); border-radius: 4px;">
+              <h4 style="color: #818cf8; font-size: 13px; font-weight: 700; margin-bottom: 2px;">1. Credit Card: Kênh Xương Sống (78.3% GMV)</h4>
+              <p style="font-size: 12px; color: var(--text-secondary);">
+                76,505 đơn hàng, AOV 163.14 BRL, kỳ hạn trung bình 3.5 kỳ. Duyệt thần tốc 0.19 ngày (4.5 giờ).
+              </p>
+            </div>
+            <div style="padding: 12px; background: rgba(245, 158, 11, 0.08); border-left: 3px solid var(--accent-amber); border-radius: 4px;">
+              <h4 style="color: var(--accent-gold); font-size: 13px; font-weight: 700; margin-bottom: 2px;">2. Boleto: Điểm Nghẽn Xác Thực 42.5 Giờ (18.0% GMV)</h4>
+              <p style="font-size: 12px; color: var(--text-secondary);">
+                19,784 đơn tiền mặt. Độ trễ xác thực 1.77 ngày làm chu kỳ giao hàng đội lên 13.4 ngày (chậm hơn thẻ 1.1 ngày).
+              </p>
+            </div>
+            <div style="padding: 12px; background: rgba(244, 63, 94, 0.08); border-left: 3px solid var(--accent-rose); border-radius: 4px;">
+              <h4 style="color: var(--accent-rose); font-size: 13px; font-weight: 700; margin-bottom: 2px;">3. Voucher: Ổ Bệnh Hủy Đơn Kỷ Lục (2.97%)</h4>
+              <p style="font-size: 12px; color: var(--text-secondary);">
+                Tỷ lệ hủy đơn cao gấp 5.1 lần thẻ tín dụng. Review thấp nhất (4.00), phản ánh tâm lý dò xét của nhóm nhận đền bù.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table 1 -->
+      <div class="panel" style="margin-bottom: 16px;">
+        <div class="panel-header">
+          <h3 class="panel-title">Bảng 1: So Sánh Hiệu Năng 4 Phương Thức Thanh Toán</h3>
+          <span class="agent-pill">Tổng Hợp 98,206 Giao Dịch</span>
+        </div>
+        <div class="table-container">
+          <table id="tablePayments">
+            <thead>
+              <tr>
+                <th>Phương thức</th>
+                <th>Số đơn</th>
+                <th>Tổng GMV (BRL)</th>
+                <th>AOV (BRL)</th>
+                <th>Kỳ hạn TB</th>
+                <th>Duyệt đơn</th>
+                <th>Giao TB</th>
+                <th>Tỷ lệ 1 sao</th>
+                <th>Tỷ lệ hủy</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-type="credit_card">
+                <td class="mono-cell" style="font-weight: 700; color: #818cf8;">credit_card</td>
+                <td class="mono-cell">76,505</td>
+                <td class="mono-cell">12,594,157.13</td>
+                <td class="mono-cell">163.14</td>
+                <td class="mono-cell" style="color: var(--accent-gold); font-weight: 700;">3.5 kỳ</td>
+                <td class="mono-cell" style="color: var(--accent-emerald);">0.19 ngày</td>
+                <td class="mono-cell">12.3 ngày</td>
+                <td class="mono-cell">11.55%</td>
+                <td class="mono-cell">0.59%</td>
+              </tr>
+              <tr data-type="boleto">
+                <td class="mono-cell" style="font-weight: 700; color: var(--accent-amber);">boleto</td>
+                <td class="mono-cell">19,784</td>
+                <td class="mono-cell">2,886,679.49</td>
+                <td class="mono-cell">144.99</td>
+                <td class="mono-cell">1.0 kỳ</td>
+                <td class="mono-cell" style="color: var(--accent-rose); font-weight: 700;">1.77 ngày (42h)</td>
+                <td class="mono-cell">13.4 ngày</td>
+                <td class="mono-cell">11.28%</td>
+                <td class="mono-cell">0.48%</td>
+              </tr>
+              <tr data-type="voucher">
+                <td class="mono-cell" style="font-weight: 700; color: var(--accent-rose);">voucher</td>
+                <td class="mono-cell">3,866</td>
+                <td class="mono-cell">381,862.99</td>
+                <td class="mono-cell">65.50</td>
+                <td class="mono-cell">1.0 kỳ</td>
+                <td class="mono-cell">0.36 ngày</td>
+                <td class="mono-cell">12.6 ngày</td>
+                <td class="mono-cell" style="color: var(--accent-rose);">12.81%</td>
+                <td class="mono-cell" style="color: var(--accent-rose); font-weight: 700;">2.97%</td>
+              </tr>
+              <tr data-type="debit_card">
+                <td class="mono-cell" style="font-weight: 700; color: var(--accent-emerald);">debit_card</td>
+                <td class="mono-cell">1,528</td>
+                <td class="mono-cell">218,721.13</td>
+                <td class="mono-cell">142.40</td>
+                <td class="mono-cell">1.0 kỳ</td>
+                <td class="mono-cell">0.39 ngày</td>
+                <td class="mono-cell" style="color: var(--accent-emerald); font-weight: 700;">10.8 ngày</td>
+                <td class="mono-cell" style="color: var(--accent-emerald);">10.01%</td>
+                <td class="mono-cell">0.46%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Causal Bridge 1 -> 2 -->
+      <div class="causal-bridge">
+        <strong>CẦU NỐI LOGIC CHẨN ĐOÁN (BẢNG 1 ➔ BẢNG 2):</strong><br>
+        Bảng 1 đã chứng minh Thẻ tín dụng là trụ cột dòng tiền áp đảo (chiếm 78.3% GMV) với số kỳ trả góp trung bình <strong>3.5 kỳ</strong>. Tuy nhiên, con số trung bình 3.5 kỳ này đang che giấu sự phân hóa khổng lồ giữa các mức kỳ hạn. Khách hàng trả góp 1 kỳ, 5 kỳ hay 10 kỳ có hành vi chi tiêu và phản ứng trải nghiệm khác nhau như thế nào? Để tìm ra điểm gãy cấu trúc của giỏ hàng, ta cần tiếp tục giải phẫu <strong>Bảng 2: Cắt lớp theo từng kỳ hạn trả góp</strong>.
+      </div>
+    </div>
+
+    <!-- ==========================================================================
+         TAB 2: KỲ HẠN TRẢ GÓP (BẢNG 2)
+         ========================================================================== -->
+    <div id="tab-installments" class="tab-pane">
+      <!-- Causal Intro Bridge -->
+      <div class="causal-bridge">
+        <strong>XUẤT PHÁT ĐIỂM CHẨN ĐOÁN BẢNG 2:</strong><br>
+        Để kiểm tra giả thuyết về đòn bẩy tài chính của Thẻ tín dụng từ Bảng 1, Bảng 2 chia 76,505 giao dịch thành 6 nhóm kỳ hạn: từ Trả ngay (1 kỳ) đến Siêu dài hạn (>= 11 kỳ).
+      </div>
+
+      <div class="grid-2col">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">Tương Quan: AOV Bình Quân vs Tỷ Lệ Đánh Giá 1 Sao</h3>
+              <p class="panel-subtitle">Dual-Axis Chart mô tả điểm nhảy vọt AOV và điểm gãy review</p>
+            </div>
+            <span class="tag tag-gold">Dual-Axis Curve</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartInstallmentParadox"></canvas>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">Giải Phẫu Bất Thường Ở Mốc 10 Kỳ</h3>
+              <p class="panel-subtitle">Sự bùng nổ AOV đi kèm sự gia tăng độ bất mãn</p>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div style="padding: 14px; background: rgba(245, 158, 11, 0.08); border-left: 3px solid var(--accent-gold); border-radius: 4px;">
+              <h4 style="font-size: 13px; font-weight: 700; color: var(--accent-gold); margin-bottom: 4px;">1. CÚ NHẢY VỌT AOV TẠI MỐC 10 KỲ (413.83 BRL)</h4>
+              <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.6;">
+                Khách hàng mua hàng ở kỳ 10 có giỏ hàng cao gấp <strong>4.3 lần</strong> so với đơn 1 kỳ. Nhóm này đóng góp tới <strong>2.22 Triệu BRL GMV</strong> với 5,315 đơn hàng.
+              </p>
+            </div>
+
+            <div style="padding: 14px; background: rgba(244, 63, 94, 0.08); border-left: 3px solid var(--accent-rose); border-radius: 4px;">
+              <h4 style="font-size: 13px; font-weight: 700; color: var(--accent-rose); margin-bottom: 4px;">2. TỶ LỆ 1 SAO TĂNG VỌT +43.5%</h4>
+              <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.6;">
+                Tỷ lệ 1 sao vọt từ <strong>10.41% (ở 1 kỳ)</strong> lên <strong>14.94% (ở 10 kỳ)</strong>. Điểm review trung bình chính thức xuyên thủng mốc 4.0, rơi xuống <strong>3.96</strong>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table 2 -->
+      <div class="panel" style="margin-bottom: 16px;">
+        <div class="panel-header">
+          <h3 class="panel-title">Bảng 2: Ma Trận Cắt Lớp Kỳ Hạn Trả Góp Trên Thẻ Tín Dụng</h3>
+          <span class="agent-pill">76,505 Giao Dịch Thẻ Tín Dụng</span>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Nhóm kỳ hạn</th>
+                <th>Số lượng đơn</th>
+                <th>Tổng GMV (BRL)</th>
+                <th>AOV (BRL)</th>
+                <th>Giao TB</th>
+                <th>Trễ SLA</th>
+                <th>Tỷ lệ 1 sao</th>
+                <th>Review TB</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="mono-cell" style="font-weight: 700;">01. Trả 1 lần (1 kỳ)</td>
+                <td class="mono-cell">25,407</td>
+                <td class="mono-cell">2,449,483.24</td>
+                <td class="mono-cell">95.87</td>
+                <td class="mono-cell" style="color: var(--accent-emerald);">11.3 ngày</td>
+                <td class="mono-cell">6.01%</td>
+                <td class="mono-cell" style="color: var(--accent-emerald);">10.41%</td>
+                <td class="mono-cell" style="font-weight: 700; color: var(--accent-emerald);">4.15</td>
+              </tr>
+              <tr>
+                <td class="mono-cell">02. Ngắn hạn (2 - 3 kỳ)</td>
+                <td class="mono-cell">22,822</td>
+                <td class="mono-cell">3,080,504.69</td>
+                <td class="mono-cell">134.09</td>
+                <td class="mono-cell">12.3 ngày</td>
+                <td class="mono-cell">6.84%</td>
+                <td class="mono-cell">11.25%</td>
+                <td class="mono-cell">4.09</td>
+              </tr>
+              <tr>
+                <td class="mono-cell">03. Trung hạn (4 - 6 kỳ)</td>
+                <td class="mono-cell">16,223</td>
+                <td class="mono-cell">2,959,435.58</td>
+                <td class="mono-cell">180.83</td>
+                <td class="mono-cell">13.1 ngày</td>
+                <td class="mono-cell">6.97%</td>
+                <td class="mono-cell">11.85%</td>
+                <td class="mono-cell">4.06</td>
+              </tr>
+              <tr>
+                <td class="mono-cell">04. Cận dài hạn (7 - 9 kỳ)</td>
+                <td class="mono-cell">6,519</td>
+                <td class="mono-cell">1,756,205.38</td>
+                <td class="mono-cell">266.74</td>
+                <td class="mono-cell">13.2 ngày</td>
+                <td class="mono-cell">7.61%</td>
+                <td class="mono-cell">13.25%</td>
+                <td class="mono-cell">4.03</td>
+              </tr>
+              <tr style="background: rgba(245, 158, 11, 0.08);">
+                <td class="mono-cell" style="font-weight: 700; color: var(--accent-gold);">05. Mốc vàng (10 kỳ - Peak)</td>
+                <td class="mono-cell" style="font-weight: 700;">5,315</td>
+                <td class="mono-cell" style="font-weight: 700; color: var(--accent-gold);">2,225,164.02</td>
+                <td class="mono-cell" style="font-weight: 700; color: var(--accent-gold);">413.83 (x4.3)</td>
+                <td class="mono-cell" style="color: var(--accent-rose); font-weight: 700;">13.8 ngày</td>
+                <td class="mono-cell">7.26%</td>
+                <td class="mono-cell" style="color: var(--accent-rose); font-weight: 700;">14.94% (+43%)</td>
+                <td class="mono-cell" style="font-weight: 700; color: var(--accent-rose);">3.96</td>
+              </tr>
+              <tr style="background: rgba(244, 63, 94, 0.08);">
+                <td class="mono-cell" style="color: var(--accent-rose);">06. Siêu dài hạn (>= 11 kỳ)</td>
+                <td class="mono-cell">343</td>
+                <td class="mono-cell">123,364.22</td>
+                <td class="mono-cell">354.49</td>
+                <td class="mono-cell" style="color: var(--accent-rose);">14.7 ngày</td>
+                <td class="mono-cell">8.16%</td>
+                <td class="mono-cell" style="color: var(--accent-rose); font-weight: 700;">17.54%</td>
+                <td class="mono-cell" style="color: var(--accent-rose); font-weight: 700;">3.89</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Causal Bridge 2 -> 3 -->
+      <div class="causal-bridge">
+        <strong>CẦU NỐI LOGIC CHẨN ĐOÁN (BẢNG 2 ➔ BẢNG 3):</strong><br>
+        Từ Bảng 2, ta đã cô lập được hiện tượng bất thường: <strong>Mốc 10 kỳ là điểm gãy trải nghiệm nơi điểm review rơi xuống đáy 3.96 và tỷ lệ 1 sao vọt lên 14.94%</strong>. Câu hỏi nhân quả tiếp theo: <em>Khách hàng mua những mặt hàng gì ở mốc 10 kỳ khiến mức độ phẫn nộ của họ cao hơn hẳn các đơn hàng trả ngay? Liệu có phải do đặc tính dễ hư hại của sản phẩm hay không?</em> Để trả lời, ta cần <strong>Bảng 3: Bóc tách cơ cấu ngành hàng tại mốc 10 kỳ</strong>.
+      </div>
+    </div>
+
+    <!-- ==========================================================================
+         TAB 3: DANH MỤC Ở MỐC 10 KỲ (BẢNG 3)
+         ========================================================================== -->
+    <div id="tab-categories" class="tab-pane">
+      <div class="grid-2col">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">Top 8 Ngành Hàng Thống Trị Ở Mốc 10 Kỳ Trả Góp</h3>
+              <p class="panel-subtitle">Horizontal Bar Chart xếp hạng theo giá trị AOV bình quân (BRL)</p>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartTopCategories10"></canvas>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">Giải Phẫu Bản Chất Mặt Hàng Giá Trị Cao</h3>
+              <p class="panel-subtitle">Phát hiện nguồn gốc gây tỷ lệ 1 sao cao kỷ lục</p>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="background: rgba(14, 21, 37, 0.85); padding: 12px; border-radius: 4px; border: 1px solid var(--border-light);">
+              <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Phụ tùng ô tô (Automotivo)</div>
+              <div style="font-family: var(--font-mono); font-size: 20px; font-weight: 700; color: var(--accent-gold);">554.66 BRL</div>
+              <div style="font-size: 11px; color: var(--text-secondary);">AOV cao nhất, độ khắt khe kỹ thuật lớn</div>
+            </div>
+            <div style="background: rgba(244, 63, 94, 0.06); padding: 12px; border-radius: 4px; border: 1px solid rgba(244, 63, 94, 0.25);">
+              <div style="font-size: 11px; color: var(--accent-rose); text-transform: uppercase; font-weight: 700;">Nội thất & Decor (Móveis) - Ổ BỆNH</div>
+              <div style="font-family: var(--font-mono); font-size: 20px; font-weight: 700; color: var(--accent-rose);">20.62% Đánh giá 1 sao</div>
+              <div style="font-size: 11px; color: var(--text-secondary);">Review rơi tự do xuống 3.79 (Cứ 5 đơn có 1 đơn 1 sao)</div>
+            </div>
+            <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.6;">
+              Hàng cồng kềnh (nội thất) và hàng tinh xảo (đồng hồ, công nghệ) bị hư hại bao bì hoặc trầy xước do bưu cục bưu điện đối xử như hàng thông thường, kích hoạt sự giận dữ của khách hàng đang gánh nợ 10 tháng.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table 3 -->
+      <div class="panel" style="margin-bottom: 16px;">
+        <div class="panel-header">
+          <h3 class="panel-title">Bảng 3: Chi Tiết Các Ngành Hàng Chủ Lực Tại Mốc 10 Kỳ</h3>
+          <span class="agent-pill">Lọc Các Ngành Có &gt;= 150 Đơn</span>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Danh mục sản phẩm</th>
+                <th>Số đơn mốc 10 kỳ</th>
+                <th>Tổng GMV (BRL)</th>
+                <th>AOV Bình quân (BRL)</th>
+                <th>Điểm review TB</th>
+                <th>Tỷ lệ 1 sao</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="mono-cell" style="font-weight: 700;">automotivo (Phụ tùng ô tô)</td>
+                <td class="mono-cell">283</td>
+                <td class="mono-cell">157,468.80</td>
+                <td class="mono-cell" style="color: var(--accent-gold); font-weight: 700;">554.66</td>
+                <td class="mono-cell">3.94</td>
+                <td class="mono-cell">14.84%</td>
+              </tr>
+              <tr>
+                <td class="mono-cell" style="font-weight: 700;">relogios_presentes (Đồng hồ quà tặng)</td>
+                <td class="mono-cell">281</td>
+                <td class="mono-cell">129,923.16</td>
+                <td class="mono-cell" style="color: var(--accent-gold);">462.36</td>
+                <td class="mono-cell" style="color: var(--accent-rose);">3.88</td>
+                <td class="mono-cell" style="color: var(--accent-rose); font-weight: 700;">17.08%</td>
+              </tr>
+              <tr>
+                <td class="mono-cell">esporte_lazer (Thể thao dã ngoại)</td>
+                <td class="mono-cell">336</td>
+                <td class="mono-cell">144,449.76</td>
+                <td class="mono-cell">429.91</td>
+                <td class="mono-cell">4.02</td>
+                <td class="mono-cell">13.99%</td>
+              </tr>
+              <tr>
+                <td class="mono-cell">cool_stuff (Đồ chơi công nghệ)</td>
+                <td class="mono-cell">303</td>
+                <td class="mono-cell">129,017.40</td>
+                <td class="mono-cell">425.80</td>
+                <td class="mono-cell" style="color: var(--accent-rose);">3.85</td>
+                <td class="mono-cell" style="color: var(--accent-rose); font-weight: 700;">18.48%</td>
+              </tr>
+              <tr>
+                <td class="mono-cell">beleza_saude (Sức khỏe sắc đẹp)</td>
+                <td class="mono-cell">354</td>
+                <td class="mono-cell">145,497.08</td>
+                <td class="mono-cell">411.02</td>
+                <td class="mono-cell">4.08</td>
+                <td class="mono-cell">12.15%</td>
+              </tr>
+              <tr style="background: rgba(244, 63, 94, 0.06);">
+                <td class="mono-cell" style="font-weight: 700; color: var(--accent-rose);">moveis_decoracao (Nội thất decor)</td>
+                <td class="mono-cell">417</td>
+                <td class="mono-cell">132,326.61</td>
+                <td class="mono-cell">317.33</td>
+                <td class="mono-cell" style="color: var(--accent-rose); font-weight: 700;">3.79</td>
+                <td class="mono-cell" style="color: var(--accent-rose); font-weight: 700;">20.62%</td>
+              </tr>
+              <tr>
+                <td class="mono-cell">cama_mesa_banho (Chăn ga gối đệm)</td>
+                <td class="mono-cell">630</td>
+                <td class="mono-cell">161,368.20</td>
+                <td class="mono-cell">256.14</td>
+                <td class="mono-cell">3.98</td>
+                <td class="mono-cell">15.08%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Causal Bridge 3 -> 4 -->
+      <div class="causal-bridge">
+        <strong>CẦU NỐI LOGIC CHẨN ĐOÁN (BẢNG 3 ➔ BẢNG 4):</strong><br>
+        Bảng 3 đã xác nhận mốc 10 kỳ tập trung vào các mặt hàng nhạy cảm (Đồng hồ, Nội thất, Phụ tùng ô tô). Nhưng liệu tỷ lệ 1 sao cao có phải hoàn toàn do thời gian giao trễ (SLA breach) gây ra hay do bản thân tâm lý gánh nợ định kỳ đã khiến khách hàng khắt khe hơn ngay cả khi đơn được giao đúng hẹn? Để bóc tách độc lập tác động của <em>Độ trễ vận chuyển</em> và <em>Tâm lý gánh nợ</em>, ta thiết lập <strong>Bảng 4: Ma trận tương tác 2 chiều SLA Giao Hàng x Kỳ Hạn x Tỷ Lệ Đánh Giá</strong>.
+      </div>
+    </div>
+
+    <!-- ==========================================================================
+         TAB 4: MA TRẬN 2 CHIỀU SLA x KỲ HẠN (BẢNG 4)
+         ========================================================================== -->
+    <div id="tab-crosstab" class="tab-pane">
+      <div class="grid-2col">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">Tỷ Lệ Đánh Giá 1 Sao: Đơn Giao Đúng Hạn vs Trễ Hạn</h3>
+              <p class="panel-subtitle">Grouped Bar Chart phân định mức độ tổn thương trải nghiệm</p>
+            </div>
+            <span class="tag tag-rose">Cross-Tab Visual</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartCrossTab"></canvas>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">Phát Hiện Cốt Lõi Từ Ma Trận 2 Chiều</h3>
+              <p class="panel-subtitle">Bằng chứng thực nghiệm về Tâm Lý Nhà Đầu Tư Khắt Khe</p>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div style="padding: 14px; background: rgba(56, 189, 248, 0.08); border-left: 3px solid var(--accent-cyan); border-radius: 4px;">
+              <h4 style="color: var(--accent-cyan); font-size: 13px; font-weight: 700; margin-bottom: 4px;">1. KHI GIAO ĐÚNG HẸN: ĐƠN 10 KỲ VẪN BẤT MÃN HƠN GẤP ĐÔI</h4>
+              <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.6;">
+                Ở các đơn giao đúng hạn (On-time), đơn 1 kỳ có tỷ lệ 1 sao chỉ là <strong>5.83%</strong>. Nhưng ở đơn 10 kỳ, tỷ lệ 1 sao vọt lên <strong>9.49% (cao hơn +62.7%)</strong>. Khách mua đồ 400 BRL trả 10 tháng không chỉ cần đúng ngày, họ đòi hỏi chất lượng hàng hóa và đóng gói phải tương xứng với gánh nợ định kỳ.
+              </p>
+            </div>
+
+            <div style="padding: 14px; background: rgba(244, 63, 94, 0.08); border-left: 3px solid var(--accent-rose); border-radius: 4px;">
+              <h4 style="color: var(--accent-rose); font-size: 13px; font-weight: 700; margin-bottom: 4px;">2. KHI GIAO TRỄ HẠN: SỰ PHẪN NỘ BÙNG NỔ CỰC ĐẠI (58.17% 1 SAO)</h4>
+              <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.6;">
+                Nếu đơn 10 kỳ bị giao muộn, <strong>gần 6 trên 10 khách hàng (58.17%) chấm ngay 1 sao</strong>. Ở nhóm siêu dài hạn (&gt;=11 kỳ), tỷ lệ 1 sao lên tới <strong>74.07%</strong> với review chạm đáy 1.59/5.0!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table 4 -->
+      <div class="panel">
+        <div class="panel-header">
+          <h3 class="panel-title">Bảng 4: Ma Trận Đối Chiếu Trạng Thái Giao Hàng x Số Kỳ Trả Góp</h3>
+          <span class="agent-pill">Cross-Tabulation Thực Chứng</span>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Nhóm kỳ hạn</th>
+                <th>Trạng thái giao hàng</th>
+                <th>Số đơn thực tế</th>
+                <th>Điểm review trung bình</th>
+                <th>Tỷ lệ đánh giá 1 sao</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="mono-cell" rowspan="2" style="font-weight: 700;">1 kỳ (Trả ngay)</td>
+                <td class="mono-cell" style="color: var(--accent-emerald);">Đúng hạn (On-time)</td>
+                <td class="mono-cell">23,227</td>
+                <td class="mono-cell" style="color: var(--accent-emerald);">4.34</td>
+                <td class="mono-cell" style="color: var(--accent-emerald);">5.83%</td>
+              </tr>
+              <tr>
+                <td class="mono-cell" style="color: var(--accent-rose);">Trễ hạn (Late)</td>
+                <td class="mono-cell">1,484</td>
+                <td class="mono-cell">2.23</td>
+                <td class="mono-cell">54.94%</td>
+              </tr>
+
+              <tr style="border-top: 1px solid var(--border-light);">
+                <td class="mono-cell" rowspan="2" style="font-weight: 700;">2 - 5 kỳ</td>
+                <td class="mono-cell" style="color: var(--accent-emerald);">Đúng hạn (On-time)</td>
+                <td class="mono-cell">31,781</td>
+                <td class="mono-cell">4.28</td>
+                <td class="mono-cell">6.49%</td>
+              </tr>
+              <tr>
+                <td class="mono-cell" style="color: var(--accent-rose);">Trễ hạn (Late)</td>
+                <td class="mono-cell">2,355</td>
+                <td class="mono-cell">2.16</td>
+                <td class="mono-cell">55.77%</td>
+              </tr>
+
+              <tr style="border-top: 1px solid var(--border-light); background: rgba(245, 158, 11, 0.05);">
+                <td class="mono-cell" rowspan="2" style="font-weight: 700; color: var(--accent-gold);">10 kỳ (Mốc vàng)</td>
+                <td class="mono-cell" style="color: var(--accent-emerald); font-weight: 600;">Đúng hạn (On-time)</td>
+                <td class="mono-cell">4,764</td>
+                <td class="mono-cell">4.18</td>
+                <td class="mono-cell" style="color: var(--accent-rose); font-weight: 700;">9.49% (+63%)</td>
+              </tr>
+              <tr style="background: rgba(245, 158, 11, 0.05);">
+                <td class="mono-cell" style="color: var(--accent-rose); font-weight: 700;">Trễ hạn (Late)</td>
+                <td class="mono-cell">373</td>
+                <td class="mono-cell">2.23</td>
+                <td class="mono-cell" style="color: var(--accent-rose); font-weight: 700;">58.17%</td>
+              </tr>
+
+              <tr style="border-top: 1px solid var(--border-light); background: rgba(244, 63, 94, 0.06);">
+                <td class="mono-cell" rowspan="2" style="font-weight: 700; color: var(--accent-rose);">&gt;= 11 kỳ (Siêu dài hạn)</td>
+                <td class="mono-cell" style="color: var(--accent-emerald);">Đúng hạn (On-time)</td>
+                <td class="mono-cell">304</td>
+                <td class="mono-cell">4.17</td>
+                <td class="mono-cell">10.89%</td>
+              </tr>
+              <tr style="background: rgba(244, 63, 94, 0.06);">
+                <td class="mono-cell" style="color: var(--accent-rose); font-weight: 700;">Trễ hạn (Late)</td>
+                <td class="mono-cell">27</td>
+                <td class="mono-cell" style="color: var(--accent-rose); font-weight: 700;">1.59</td>
+                <td class="mono-cell" style="color: var(--accent-rose); font-weight: 700;">74.07%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================================================
+         TAB 5: TỔNG HỢP ĐỊNH VỊ CĂN BỆNH CỐT LÕI (CORE PROBLEM DIAGNOSIS)
+         ========================================================================== -->
+    <div id="tab-diagnosis" class="tab-pane">
+      <div class="panel" style="border: 1px solid rgba(244, 63, 94, 0.4); margin-bottom: 24px;">
+        <div class="panel-header">
+          <div>
+            <h3 class="panel-title" style="color: var(--accent-rose);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+              Tổng Hợp Định Vị Căn Bệnh Cốt Lõi (Core Problem Diagnosis)
+            </h3>
+            <p class="panel-subtitle">Giải phẫu 3 căn bệnh cấu trúc từ chuỗi phân tích nhân quả 4 tầng dữ liệu — Thuần chẩn đoán nguyên nhân gốc rễ, không giải pháp sớm</p>
+          </div>
+          <span class="tag tag-rose">Executive Synthesis</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px; margin-top: 10px;">
+          <!-- Disease Card 1 -->
+          <div style="background: rgba(245, 158, 11, 0.06); border-top: 3px solid var(--accent-amber); border-radius: var(--radius-md); padding: 18px; display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <span class="cell-badge tag-amber">Căn bệnh 1</span>
+              <span class="mono-cell" style="font-size: 11px; color: var(--text-muted);">42.5h Lag · 0.76% Unavailable</span>
+            </div>
+            <h4 style="font-size: 14px; font-weight: 700; color: var(--accent-gold);">Đứt Gãy Dòng Tiền Tiền Mặt (Boleto Inefficient Float & Phantom Inventory)</h4>
+            <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.6;">
+              Độ trễ phê duyệt <strong>1.77 ngày (42.5 giờ)</strong> của phương thức Boleto Bancário không đơn thuần là sự chậm trễ kỹ thuật ngân hàng. Nó tạo ra hiện tượng <em>"tồn kho ma" (phantom inventory)</em>: người bán phải giữ hàng trong kho trong khi chờ người mua đi nộp tiền mặt.
+            </p>
+            <div style="padding: 10px; background: rgba(0, 0, 0, 0.25); border-radius: 4px; font-size: 12px; color: var(--text-secondary);">
+              <div style="color: var(--text-primary); font-weight: 600; margin-bottom: 4px;">Hệ quả thực chứng:</div>
+              Tỷ lệ đơn rơi vào trạng thái hết hàng (<code>unavailable</code>) ở Boleto đạt <strong>0.76%</strong> (cao hơn 31% so với thẻ tín dụng 0.58%), đồng thời kéo chu kỳ giao hàng đội lên <strong>13.40 ngày</strong> (+1.1 ngày so với thẻ), trực tiếp gây lãng phí chi phí kho bãi và xói mòn lòng tin ban đầu của người mua.
+            </div>
+          </div>
+
+          <!-- Disease Card 2 -->
+          <div style="background: rgba(244, 63, 94, 0.06); border-top: 3px solid var(--accent-rose); border-radius: var(--radius-md); padding: 18px; display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <span class="cell-badge tag-rose">Căn bệnh 2</span>
+              <span class="mono-cell" style="font-size: 11px; color: var(--text-muted);">AOV 413 BRL · 1-sao 14.94%</span>
+            </div>
+            <h4 style="font-size: 14px; font-weight: 700; color: var(--accent-rose);">Vòng Lặp Vết Thương Tài Chính (The Recurring Bill Friction & Investor Mentality)</h4>
+            <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.6;">
+              Kỳ hạn 10 kỳ là mỏ vàng kéo AOV đạt <strong>413.83 BRL</strong> (gấp 4.3 lần đơn 1 kỳ, mang về 2.225M BRL GMV) nhưng lại trở thành bẫy triệt tiêu chỉ số giữ chân. Khách hàng trả góp 10 kỳ hình thành <em>"Tâm lý nhà đầu tư"</em>: họ xem giao dịch là khoản nợ dài hạn và kỳ vọng sản phẩm phải hoàn hảo tương xứng.
+            </p>
+            <div style="padding: 10px; background: rgba(0, 0, 0, 0.25); border-radius: 4px; font-size: 12px; color: var(--text-secondary);">
+              <div style="color: var(--text-primary); font-weight: 600; margin-bottom: 4px;">Hệ quả thực chứng:</div>
+              Ngay cả khi đơn hàng <strong>giao hoàn toàn đúng hạn SLA</strong>, tỷ lệ 1 sao ở đơn 10 kỳ vẫn là <strong>9.49%</strong> (cao hơn +62.7% so với 5.83% ở đơn 1 kỳ). Khi giao trễ, tỷ lệ 1 sao bị đẩy lên <strong>58.17%</strong> do khách hàng bị trừ sao kê kỳ 1 trước khi nhận hàng. Mỗi tháng một lần, sao kê thẻ tín dụng lại kích hoạt lại sự bức xúc này suốt 10 tháng liên tiếp.
+            </div>
+          </div>
+
+          <!-- Disease Card 3 -->
+          <div style="background: rgba(99, 102, 241, 0.06); border-top: 3px solid var(--accent-indigo); border-radius: var(--radius-md); padding: 18px; display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <span class="cell-badge tag-indigo">Căn bệnh 3</span>
+              <span class="mono-cell" style="font-size: 11px; color: var(--text-muted);">Nội thất 20.6% 1-sao · 15.7d Giao</span>
+            </div>
+            <h4 style="font-size: 14px; font-weight: 700; color: #a5b4fc;">Đánh Đổi Tăng Trưởng Bằng Rủi Ro Hài Lòng (Misaligned Value vs Logistics Fragility)</h4>
+            <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.6;">
+              Olist sử dụng đòn bẩy trả góp để đẩy doanh số ở các danh mục có giá trị cao và cồng kềnh: Phụ tùng ô tô (AOV 554.66 BRL), Đồng hồ xa xỉ (462.36 BRL), Đồ phong cách sống (425.80 BRL) và Nội thất decor (317.33 BRL).
+            </p>
+            <div style="padding: 10px; background: rgba(0, 0, 0, 0.25); border-radius: 4px; font-size: 12px; color: var(--text-secondary);">
+              <div style="color: var(--text-primary); font-weight: 600; margin-bottom: 4px;">Hệ quả thực chứng:</div>
+              Mạng lưới logistics 3P của các người bán nhỏ lẻ hoàn toàn không đủ năng lực kiểm soát chất lượng vận chuyển hàng hóa cồng kềnh, dễ vỡ. Ngành nội thất decor (<code>moveis_decoracao</code>) có thời gian giao lên tới <strong>15.65 ngày</strong> và tỷ lệ 1 sao đạt đỉnh <strong>20.62%</strong> (cứ 5 đơn có 1 đơn 1 sao), biến nhóm khách hàng chi tiêu lớn nhất thành nhóm chỉ trích gay gắt nhất sàn.
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 20px; padding: 16px; background: rgba(12, 19, 34, 0.9); border: 1px solid var(--border-light); border-radius: var(--radius-md);">
+          <div style="font-size: 12px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em;">
+            Đối chiếu logic chuỗi nhân quả qua 4 tầng phân tích
+          </div>
+          <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.65;">
+            Từ <strong>Bảng 1</strong> (phát hiện Boleto trễ 42.5h, Voucher hủy 2.97%, Thẻ tín dụng chiếm 78% GMV nhưng có 11.5% 1-sao) ➔ dẫn tới <strong>Bảng 2</strong> (phát hiện Nghịch lý 10 kỳ: AOV x4.3 nhưng 1-sao tăng +43.5%) ➔ dẫn tới <strong>Bảng 3</strong> (bóc tách danh mục phát hiện nội thất 20.6% 1-sao và đồng hồ cao cấp cũng dính 17.1% 1-sao dù giao nhanh) ➔ dẫn tới <strong>Bảng 4</strong> (ma trận SLA chứng minh ngay cả khi giao đúng hạn, đơn 10 kỳ vẫn bị 9.49% 1-sao do tâm lý nhà đầu tư và vết thương sao kê hàng tháng). Đây là bằng chứng định lượng rõ ràng nhất về sự đứt gãy giữa tăng trưởng quy mô và kiểm soát trải nghiệm khách hàng tại Olist.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================================================
+         TAB 6: BỘ SQL CONSOLE (RAW DATA EXTRACT)
+         ========================================================================== -->
+    <div id="tab-sql" class="tab-pane">
+      <div class="sql-block">
+        <div class="sql-header">
+          <div class="sql-title">QUERY 1: TỔNG QUAN 4 PHƯƠNG THỨC THANH TOÁN (BẢNG 1)</div>
+          <button class="btn" onclick="copyCode('code1')">Copy SQL</button>
+        </div>
+        <pre><code id="code1"><span class="sql-keyword">SELECT</span> 
+    p.payment_type,
+    <span class="sql-function">COUNT</span>(<span class="sql-keyword">DISTINCT</span> o.order_id) <span class="sql-keyword">AS</span> total_orders,
+    <span class="sql-function">ROUND</span>(<span class="sql-function">SUM</span>(<span class="sql-function">CAST</span>(p.payment_value <span class="sql-keyword">AS DECIMAL</span>(10,2))), 2) <span class="sql-keyword">AS</span> total_payment_value,
+    <span class="sql-function">ROUND</span>(<span class="sql-function">AVG</span>(<span class="sql-function">CAST</span>(p.payment_value <span class="sql-keyword">AS DECIMAL</span>(10,2))), 2) <span class="sql-keyword">AS</span> avg_payment_value,
+    <span class="sql-function">ROUND</span>(<span class="sql-function">AVG</span>(<span class="sql-function">CAST</span>(p.payment_installments <span class="sql-keyword">AS SIGNED</span>)), 1) <span class="sql-keyword">AS</span> avg_installments,
+    <span class="sql-function">ROUND</span>(<span class="sql-function">AVG</span>(<span class="sql-keyword">CASE WHEN</span> o.order_status = <span class="sql-string">'delivered'</span> <span class="sql-keyword">AND</span> o.order_delivered_customer_date <span class="sql-keyword">IS NOT NULL</span> 
+        <span class="sql-keyword">THEN</span> <span class="sql-function">DATEDIFF</span>(<span class="sql-function">STR_TO_DATE</span>(o.order_approved_at, <span class="sql-string">'%Y-%m-%d'</span>), <span class="sql-function">STR_TO_DATE</span>(o.order_purchase_timestamp, <span class="sql-string">'%Y-%m-%d'</span>)) <span class="sql-keyword">END</span>), 2) <span class="sql-keyword">AS</span> avg_approval_days,
+    <span class="sql-function">ROUND</span>(<span class="sql-function">AVG</span>(<span class="sql-keyword">CASE WHEN</span> o.order_status = <span class="sql-string">'delivered'</span> <span class="sql-keyword">AND</span> o.order_delivered_customer_date <span class="sql-keyword">IS NOT NULL</span> 
+        <span class="sql-keyword">THEN</span> <span class="sql-function">DATEDIFF</span>(<span class="sql-function">STR_TO_DATE</span>(o.order_delivered_customer_date, <span class="sql-string">'%Y-%m-%d'</span>), <span class="sql-function">STR_TO_DATE</span>(o.order_purchase_timestamp, <span class="sql-string">'%Y-%m-%d'</span>)) <span class="sql-keyword">END</span>), 1) <span class="sql-keyword">AS</span> avg_delivery_days,
+    <span class="sql-function">ROUND</span>(<span class="sql-function">AVG</span>(<span class="sql-function">CAST</span>(r.review_score <span class="sql-keyword">AS DECIMAL</span>(3,2))), 2) <span class="sql-keyword">AS</span> avg_review_score,
+    <span class="sql-function">ROUND</span>(100.0 * <span class="sql-function">SUM</span>(<span class="sql-keyword">CASE WHEN CAST</span>(r.review_score <span class="sql-keyword">AS SIGNED</span>) = 1 <span class="sql-keyword">THEN</span> 1 <span class="sql-keyword">ELSE</span> 0 <span class="sql-keyword">END</span>) / <span class="sql-function">COUNT</span>(r.review_id), 2) <span class="sql-keyword">AS</span> pct_1_star,
+    <span class="sql-function">ROUND</span>(100.0 * <span class="sql-function">SUM</span>(<span class="sql-keyword">CASE WHEN</span> o.order_status = <span class="sql-string">'canceled'</span> <span class="sql-keyword">THEN</span> 1 <span class="sql-keyword">ELSE</span> 0 <span class="sql-keyword">END</span>) / <span class="sql-function">COUNT</span>(<span class="sql-keyword">DISTINCT</span> o.order_id), 2) <span class="sql-keyword">AS</span> cancel_rate_pct
+<span class="sql-keyword">FROM</span> olist_raw.payments p
+<span class="sql-keyword">JOIN</span> olist_raw.orders o <span class="sql-keyword">ON</span> p.order_id = o.order_id
+<span class="sql-keyword">LEFT JOIN</span> olist_raw.reviews r <span class="sql-keyword">ON</span> o.order_id = r.order_id
+<span class="sql-keyword">WHERE</span> p.payment_type != <span class="sql-string">'not_defined'</span>
+<span class="sql-keyword">GROUP BY</span> p.payment_type
+<span class="sql-keyword">ORDER BY</span> total_payment_value <span class="sql-keyword">DESC</span>;</code></pre>
+      </div>
+
+      <div class="sql-block">
+        <div class="sql-header">
+          <div class="sql-title">QUERY 2: MA TRẬN 2 CHIỀU SLA x KỲ HẠN (BẢNG 4)</div>
+          <button class="btn" onclick="copyCode('code2')">Copy SQL</button>
+        </div>
+        <pre><code id="code2"><span class="sql-keyword">SELECT</span> 
+    <span class="sql-keyword">CASE</span> 
+        <span class="sql-keyword">WHEN CAST</span>(p.payment_installments <span class="sql-keyword">AS SIGNED</span>) = 1 <span class="sql-keyword">THEN</span> <span class="sql-string">'1 kỳ'</span>
+        <span class="sql-keyword">WHEN CAST</span>(p.payment_installments <span class="sql-keyword">AS SIGNED</span>) <span class="sql-keyword">BETWEEN</span> 2 <span class="sql-keyword">AND</span> 5 <span class="sql-keyword">THEN</span> <span class="sql-string">'2 - 5 kỳ'</span>
+        <span class="sql-keyword">WHEN CAST</span>(p.payment_installments <span class="sql-keyword">AS SIGNED</span>) <span class="sql-keyword">BETWEEN</span> 6 <span class="sql-keyword">AND</span> 9 <span class="sql-keyword">THEN</span> <span class="sql-string">'6 - 9 kỳ'</span>
+        <span class="sql-keyword">WHEN CAST</span>(p.payment_installments <span class="sql-keyword">AS SIGNED</span>) = 10 <span class="sql-keyword">THEN</span> <span class="sql-string">'10 kỳ'</span>
+        <span class="sql-keyword">ELSE</span> <span class="sql-string">'>= 11 kỳ'</span>
+    <span class="sql-keyword">END AS</span> installment_group,
+    <span class="sql-keyword">CASE</span> 
+        <span class="sql-keyword">WHEN</span> <span class="sql-function">STR_TO_DATE</span>(o.order_delivered_customer_date, <span class="sql-string">'%Y-%m-%d'</span>) > <span class="sql-function">STR_TO_DATE</span>(o.order_estimated_delivery_date, <span class="sql-string">'%Y-%m-%d'</span>) <span class="sql-keyword">THEN</span> <span class="sql-string">'Late (Trễ hạn)'</span>
+        <span class="sql-keyword">ELSE</span> <span class="sql-string">'On-time (Đúng hạn)'</span>
+    <span class="sql-keyword">END AS</span> delivery_sla_status,
+    <span class="sql-function">COUNT</span>(<span class="sql-keyword">DISTINCT</span> o.order_id) <span class="sql-keyword">AS</span> order_count,
+    <span class="sql-function">ROUND</span>(<span class="sql-function">AVG</span>(<span class="sql-function">CAST</span>(r.review_score <span class="sql-keyword">AS DECIMAL</span>(3,2))), 2) <span class="sql-keyword">AS</span> avg_review,
+    <span class="sql-function">ROUND</span>(100.0 * <span class="sql-function">SUM</span>(<span class="sql-keyword">CASE WHEN CAST</span>(r.review_score <span class="sql-keyword">AS SIGNED</span>) = 1 <span class="sql-keyword">THEN</span> 1 <span class="sql-keyword">ELSE</span> 0 <span class="sql-keyword">END</span>) / <span class="sql-function">COUNT</span>(r.review_id), 2) <span class="sql-keyword">AS</span> pct_1_star
+<span class="sql-keyword">FROM</span> olist_raw.payments p
+<span class="sql-keyword">JOIN</span> olist_raw.orders o <span class="sql-keyword">ON</span> p.order_id = o.order_id
+<span class="sql-keyword">LEFT JOIN</span> olist_raw.reviews r <span class="sql-keyword">ON</span> o.order_id = r.order_id
+<span class="sql-keyword">WHERE</span> p.payment_type = <span class="sql-string">'credit_card'</span>
+  <span class="sql-keyword">AND</span> o.order_status = <span class="sql-string">'delivered'</span>
+  <span class="sql-keyword">AND</span> o.order_delivered_customer_date <span class="sql-keyword">IS NOT NULL</span>
+<span class="sql-keyword">GROUP BY</span> installment_group, delivery_sla_status
+<span class="sql-keyword">ORDER BY</span> installment_group, delivery_sla_status;</code></pre>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- JAVASCRIPT LOGIC WITH INTERACTIVE SLICERS -->
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+
+      const targetBtn = Array.from(document.querySelectorAll('.tab-button')).find(btn => btn.getAttribute('onclick').includes(tabId));
+      if (targetBtn) targetBtn.classList.add('active');
+
+      const targetPane = document.getElementById(tabId);
+      if (targetPane) targetPane.classList.add('active');
+    }
+
+    function copyCode(elementId) {
+      const text = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Đã sao chép câu lệnh SQL vào bộ nhớ đệm!');
+      });
+    }
+
+    function copyAllSQL() {
+      const c1 = document.getElementById('code1').innerText;
+      const c2 = document.getElementById('code2').innerText;
+      navigator.clipboard.writeText(c1 + '\n\n-- ==========================================\n\n' + c2).then(() => {
+        alert('Đã sao chép toàn bộ các câu lệnh SQL vào clipboard!');
+      });
+    }
+
+    // Deep Interactive Slicer & Dynamic Cross-Filtering Engine
+    let chartShareInstance = null;
+    let chartParadoxInstance = null;
+    let chartTop10Instance = null;
+    let chartCrossTabInstance = null;
+
+    const paymentData = {
+      'all': {
+        val1: '413.83 BRL', sub1: '5,315 đơn đóng góp 2,225,164 BRL GMV', badge1: 'Gấp 4.3x Đơn 1 Kỳ', label1: 'AOV Đơn Trả Góp 10 Kỳ',
+        val2: '14.94%', sub2: 'Review rơi xuống 3.96 (so với 4.15 của 1 kỳ)', badge2: '+43.5% Độ Bất Mãn', label2: 'Tỷ Lệ 1 Sao Đơn 10 Kỳ',
+        status: 'Phạm vi: <strong>Toàn sàn (98,206 đơn)</strong> — Biểu đồ phân bổ và đồ thị đối chuẩn phản hồi theo bộ lọc'
+      },
+      'credit_card': {
+        val1: '163.14 BRL', sub1: '76,505 đơn mang về 12.59M BRL GMV', badge1: '78.3% Toàn Sàn', label1: 'AOV Thẻ Tín Dụng',
+        val2: '11.55%', sub2: 'Review 4.09 | Trả góp bình quân 3.5 kỳ', badge2: 'Khảo sát 76K đơn', label2: 'Tỷ Lệ 1 Sao Thẻ Tín Dụng',
+        status: 'Đang lọc: <strong>Thẻ tín dụng (Credit Card)</strong> — Đồ thị hiển thị toàn bộ 6 nấc kỳ hạn nợ'
+      },
+      'boleto': {
+        val1: '144.99 BRL', sub1: '19,784 đơn mang về 2.89M BRL GMV', badge1: '18.0% Toàn Sàn', label1: 'AOV Boleto Bancário',
+        val2: '11.95%', sub2: 'Chờ duyệt 1.77 ngày (42.5 giờ) | Giao 13.4 ngày', badge2: 'Độ trễ 42.5h', label2: 'Tỷ Lệ 1 Sao Boleto',
+        status: 'Đang lọc: <strong>Boleto Bancário</strong> — Đồ thị tự động chuyển sang đối chuẩn Boleto với các nấc Thẻ tín dụng'
+      },
+      'voucher': {
+        val1: '65.50 BRL', sub1: '3,866 đơn mang về 379.5K BRL GMV', badge1: '2.4% Toàn Sàn', label1: 'AOV Đơn Dùng Voucher',
+        val2: '12.81%', sub2: 'Tỷ lệ hủy đơn 2.97% (Gấp 5.1 lần thẻ)', badge2: 'Hủy đơn 2.97%', label2: 'Tỷ Lệ 1 Sao Voucher',
+        status: 'Đang lọc: <strong>Voucher</strong> — Đồ thị tự động chuyển sang đối chuẩn Voucher với chuẩn sàn'
+      },
+      'debit_card': {
+        val1: '142.40 BRL', sub1: '1,528 đơn mang về 218.0K BRL GMV', badge1: '1.4% Toàn Sàn', label1: 'AOV Thẻ Ghi Nợ',
+        val2: '10.01%', sub2: 'Giao nhanh nhất: 10.8 ngày | Review cao nhất: 4.17', badge2: 'CSAT 4.17 cao nhất', label2: 'Tỷ Lệ 1 Sao Thẻ Ghi Nợ',
+        status: 'Đang lọc: <strong>Thẻ ghi nợ (Debit Card)</strong> — Đồ thị tự động chuyển sang đối chuẩn Debit với chuẩn sàn'
+      }
+    };
+
+    function updateChartShare(type) {
+      if (!chartShareInstance) return;
+      const baseColors = ['#6366f1', '#f59e0b', '#f43f5e', '#10b981'];
+      const offsets = [0, 0, 0, 0];
+      const borders = [3, 3, 3, 3];
+
+      if (type === 'credit_card') {
+        chartShareInstance.data.datasets[0].backgroundColor = ['#6366f1', 'rgba(245, 158, 11, 0.15)', 'rgba(244, 63, 94, 0.15)', 'rgba(16, 185, 129, 0.15)'];
+        offsets[0] = 16; borders[0] = 5;
+      } else if (type === 'boleto') {
+        chartShareInstance.data.datasets[0].backgroundColor = ['rgba(99, 102, 241, 0.15)', '#f59e0b', 'rgba(244, 63, 94, 0.15)', 'rgba(16, 185, 129, 0.15)'];
+        offsets[1] = 16; borders[1] = 5;
+      } else if (type === 'voucher') {
+        chartShareInstance.data.datasets[0].backgroundColor = ['rgba(99, 102, 241, 0.15)', 'rgba(245, 158, 11, 0.15)', '#f43f5e', 'rgba(16, 185, 129, 0.15)'];
+        offsets[2] = 16; borders[2] = 5;
+      } else if (type === 'debit_card') {
+        chartShareInstance.data.datasets[0].backgroundColor = ['rgba(99, 102, 241, 0.15)', 'rgba(245, 158, 11, 0.15)', 'rgba(244, 63, 94, 0.15)', '#10b981'];
+        offsets[3] = 16; borders[3] = 5;
+      } else {
+        chartShareInstance.data.datasets[0].backgroundColor = baseColors;
+      }
+
+      chartShareInstance.data.datasets[0].offset = offsets;
+      chartShareInstance.data.datasets[0].borderWidth = borders;
+      chartShareInstance.update();
+    }
+
+    function updateChartParadox(type) {
+      if (!chartParadoxInstance) return;
+
+      if (type === 'all' || type === 'credit_card') {
+        chartParadoxInstance.data.labels = ['1 kỳ (Trả ngay)', '2-3 kỳ', '4-6 kỳ', '7-9 kỳ', '10 kỳ (Peak)', '>= 11 kỳ'];
+        chartParadoxInstance.data.datasets[0].label = 'AOV Bình Quân (BRL)';
+        chartParadoxInstance.data.datasets[0].data = [95.87, 134.09, 180.83, 266.74, 413.83, 354.49];
+        chartParadoxInstance.data.datasets[0].backgroundColor = [
+          'rgba(245, 158, 11, 0.25)',
+          'rgba(245, 158, 11, 0.25)',
+          'rgba(245, 158, 11, 0.25)',
+          'rgba(245, 158, 11, 0.25)',
+          'rgba(245, 158, 11, 0.85)',
+          'rgba(245, 158, 11, 0.25)'
+        ];
+        chartParadoxInstance.data.datasets[1].data = [10.41, 11.25, 11.85, 13.25, 14.94, 17.54];
+      } else if (type === 'boleto') {
+        chartParadoxInstance.data.labels = ['Boleto (1 kỳ)', 'Thẻ tín dụng (1 kỳ)', 'Thẻ tín dụng (2-3 kỳ)', 'Thẻ tín dụng (4-6 kỳ)', 'Thẻ tín dụng (10 kỳ)'];
+        chartParadoxInstance.data.datasets[0].label = 'AOV Đối Chuẩn (BRL)';
+        chartParadoxInstance.data.datasets[0].data = [144.99, 95.87, 134.09, 180.83, 413.83];
+        chartParadoxInstance.data.datasets[0].backgroundColor = [
+          'rgba(245, 158, 11, 0.9)',
+          'rgba(99, 102, 241, 0.3)',
+          'rgba(99, 102, 241, 0.3)',
+          'rgba(99, 102, 241, 0.3)',
+          'rgba(244, 63, 94, 0.4)'
+        ];
+        chartParadoxInstance.data.datasets[1].data = [11.95, 10.41, 11.25, 11.85, 14.94];
+      } else if (type === 'voucher') {
+        chartParadoxInstance.data.labels = ['Voucher (1 kỳ)', 'Thẻ tín dụng (1 kỳ)', 'Thẻ tín dụng (2-3 kỳ)', 'Toàn sàn TB', 'Thẻ tín dụng (10 kỳ)'];
+        chartParadoxInstance.data.datasets[0].label = 'AOV Đối Chuẩn (BRL)';
+        chartParadoxInstance.data.datasets[0].data = [65.50, 95.87, 134.09, 152.88, 413.83];
+        chartParadoxInstance.data.datasets[0].backgroundColor = [
+          'rgba(244, 63, 94, 0.9)',
+          'rgba(99, 102, 241, 0.3)',
+          'rgba(99, 102, 241, 0.3)',
+          'rgba(148, 163, 184, 0.3)',
+          'rgba(245, 158, 11, 0.4)'
+        ];
+        chartParadoxInstance.data.datasets[1].data = [12.81, 10.41, 11.25, 11.60, 14.94];
+      } else if (type === 'debit_card') {
+        chartParadoxInstance.data.labels = ['Thẻ ghi nợ (1 kỳ)', 'Thẻ tín dụng (1 kỳ)', 'Thẻ tín dụng (2-3 kỳ)', 'Toàn sàn TB', 'Thẻ tín dụng (10 kỳ)'];
+        chartParadoxInstance.data.datasets[0].label = 'AOV Đối Chuẩn (BRL)';
+        chartParadoxInstance.data.datasets[0].data = [142.40, 95.87, 134.09, 152.88, 413.83];
+        chartParadoxInstance.data.datasets[0].backgroundColor = [
+          'rgba(16, 185, 129, 0.9)',
+          'rgba(99, 102, 241, 0.3)',
+          'rgba(99, 102, 241, 0.3)',
+          'rgba(148, 163, 184, 0.3)',
+          'rgba(245, 158, 11, 0.4)'
+        ];
+        chartParadoxInstance.data.datasets[1].data = [10.01, 10.41, 11.25, 11.60, 14.94];
+      }
+
+      chartParadoxInstance.update();
+    }
+
+    function filterByPayment(type, btnElement) {
+      document.querySelectorAll('.slicer-btn').forEach(b => b.classList.remove('active'));
+      if (btnElement) btnElement.classList.add('active');
+
+      const data = paymentData[type];
+      if (data) {
+        document.getElementById('kpiVal1').innerHTML = data.val1;
+        document.getElementById('kpiSub1').innerText = data.sub1;
+        document.getElementById('kpiBadge1').innerText = data.badge1;
+        document.getElementById('kpiLabel1').innerText = data.label1;
+
+        document.getElementById('kpiVal2').innerText = data.val2;
+        document.getElementById('kpiSub2').innerText = data.sub2;
+        document.getElementById('kpiBadge2').innerText = data.badge2;
+        document.getElementById('kpiLabel2').innerText = data.label2;
+
+        const statusEl = document.getElementById('slicer-status-text');
+        if (statusEl) statusEl.innerHTML = data.status;
+      }
+
+      // Filter Table 1 rows
+      const rows = document.querySelectorAll('#tablePayments tbody tr');
+      rows.forEach(r => {
+        if (type === 'all' || r.getAttribute('data-type') === type) {
+          r.style.display = '';
+          if (type !== 'all') r.style.background = 'rgba(245, 158, 11, 0.12)';
+          else r.style.background = '';
+        } else {
+          r.style.display = 'none';
+        }
+      });
+
+      // Update both charts synchronously
+      updateChartShare(type);
+      updateChartParadox(type);
+    }
+
+    function resetSlicers() {
+      const allBtn = document.querySelector('.slicer-btn');
+      filterByPayment('all', allBtn);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      Chart.defaults.color = '#94a3b8';
+      Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
+
+      // 1. Chart Payment Share
+      const ctxShare = document.getElementById('chartPaymentShare').getContext('2d');
+      chartShareInstance = new Chart(ctxShare, {
+        type: 'doughnut',
+        data: {
+          labels: ['Thẻ tín dụng (78.3%)', 'Boleto (18.0%)', 'Voucher (2.4%)', 'Thẻ ghi nợ (1.4%)'],
+          datasets: [{
+            data: [12.59, 2.89, 0.38, 0.22],
+            backgroundColor: ['#6366f1', '#f59e0b', '#f43f5e', '#10b981'],
+            borderColor: '#0c1322',
+            borderWidth: 3
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'right', labels: { boxWidth: 14 } }
+          },
+          cutout: '68%',
+          onClick: (event, elements) => {
+            if (elements && elements.length > 0) {
+              const index = elements[0].index;
+              const types = ['credit_card', 'boleto', 'voucher', 'debit_card'];
+              const selectedType = types[index];
+              const btn = document.querySelector(`.slicer-btn[onclick*="${selectedType}"]`);
+              if (btn) filterByPayment(selectedType, btn);
+            }
+          },
+          onHover: (event, chartElement) => {
+            event.native.target.style.cursor = chartElement[0] ? 'pointer' : 'default';
+          }
+        }
+      });
+
+      // 2. Chart Installment Paradox
+      const ctxParadox = document.getElementById('chartInstallmentParadox').getContext('2d');
+      chartParadoxInstance = new Chart(ctxParadox, {
+        type: 'bar',
+        data: {
+          labels: ['1 kỳ (Trả ngay)', '2-3 kỳ', '4-6 kỳ', '7-9 kỳ', '10 kỳ (Peak)', '>= 11 kỳ'],
+          datasets: [
+            {
+              type: 'bar',
+              label: 'AOV Bình Quân (BRL)',
+              data: [95.87, 134.09, 180.83, 266.74, 413.83, 354.49],
+              backgroundColor: [
+                'rgba(245, 158, 11, 0.25)',
+                'rgba(245, 158, 11, 0.25)',
+                'rgba(245, 158, 11, 0.25)',
+                'rgba(245, 158, 11, 0.25)',
+                'rgba(245, 158, 11, 0.85)',
+                'rgba(245, 158, 11, 0.25)'
+              ],
+              borderColor: '#f59e0b',
+              borderWidth: 1.5,
+              borderRadius: 4,
+              yAxisID: 'y'
+            },
+            {
+              type: 'line',
+              label: 'Tỷ lệ đánh giá 1 sao (%)',
+              data: [10.41, 11.25, 11.85, 13.25, 14.94, 17.54],
+              borderColor: '#f43f5e',
+              backgroundColor: '#f43f5e',
+              borderWidth: 2.5,
+              pointRadius: 4,
+              tension: 0.3,
+              yAxisID: 'y1'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          scales: {
+            y: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { callback: v => v + ' BRL' } },
+            y1: { position: 'right', grid: { drawOnChartArea: false }, ticks: { callback: v => v + '%' } },
+            x: { grid: { color: 'rgba(255, 255, 255, 0.05)' } }
+          }
+        }
+      });
+
+      // 3. Chart Top 8 Categories at Installment 10
+      const ctxTop10 = document.getElementById('chartTopCategories10').getContext('2d');
+      chartTop10Instance = new Chart(ctxTop10, {
+        type: 'bar',
+        indexAxis: 'y',
+        data: {
+          labels: [
+            'Phụ tùng ô tô (Automotivo)',
+            'Đồng hồ quà tặng (Relógios)',
+            'Thể thao dã ngoại (Esporte)',
+            'Đồ chơi cao cấp (Cool stuff)',
+            'Sức khỏe sắc đẹp (Beleza)',
+            'Nội thất decor (Móveis)',
+            'Đồ chơi trẻ em (Brinquedos)',
+            'Chăn ga gối đệm (Cama mesa)'
+          ],
+          datasets: [{
+            label: 'AOV Bình Quân (BRL)',
+            data: [554.66, 462.36, 429.91, 425.80, 411.02, 317.33, 330.82, 256.14],
+            backgroundColor: 'rgba(245, 158, 11, 0.65)',
+            borderColor: '#f59e0b',
+            borderWidth: 1,
+            borderRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { callback: v => v + ' BRL' } },
+            y: { grid: { color: 'rgba(255, 255, 255, 0.05)' } }
+          }
+        }
+      });
+
+      // 4. Chart Cross-Tab SLA x Installment Group
+      const ctxCrossTab = document.getElementById('chartCrossTab').getContext('2d');
+      chartCrossTabInstance = new Chart(ctxCrossTab, {
+        type: 'bar',
+        data: {
+          labels: ['1 kỳ', '2 - 5 kỳ', '6 - 9 kỳ', '10 kỳ (Mốc vàng)', '>= 11 kỳ'],
+          datasets: [
+            {
+              label: 'Giao đúng hạn (On-time): % 1 sao',
+              data: [5.83, 6.49, 7.42, 9.49, 10.89],
+              backgroundColor: 'rgba(56, 189, 248, 0.6)',
+              borderColor: '#38bdf8',
+              borderWidth: 1,
+              borderRadius: 4
+            },
+            {
+              label: 'Giao trễ hạn (Late): % 1 sao',
+              data: [54.94, 55.77, 54.99, 58.17, 74.07],
+              backgroundColor: 'rgba(244, 63, 94, 0.75)',
+              borderColor: '#f43f5e',
+              borderWidth: 1,
+              borderRadius: 4
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { callback: v => v + '%' } },
+            x: { grid: { color: 'rgba(255, 255, 255, 0.05)' } }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

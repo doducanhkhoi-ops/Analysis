@@ -1,2 +1,1 @@
-mysql-connector-python
-google-genai
+mysql-connector-python>=8.0.30

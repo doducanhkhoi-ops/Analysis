@@ -1,0 +1,36 @@
+# Database Dumps & Large Data Files (>100MB violates GitHub limits)
+*.sql
+olist_dump.sql
+OLIST.zip
+*.zip
+*.tar.gz
+*.csv
+
+# Installers & Executables
+*.msi
+*.exe
+mysql-8.0.42-winx64/
+
+# Large Power BI & PDF Files
+*.pbix
+*.pdf
+
+# Python Cache & Environments
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+
+# Environment Secrets
+.env
+*.local.json
+
+# Operating System & IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
