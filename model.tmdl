@@ -1,0 +1,21 @@
+model Model
+	culture: vi-VN
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["fact_bundle_summary","fact_bundle_sla_crosstab","fact_bundle_item_tiers","fact_bundle_seller_tiers"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table fact_bundle_summary
+ref table fact_bundle_sla_crosstab
+ref table fact_bundle_item_tiers
+ref table fact_bundle_seller_tiers
+
+ref cultureInfo vi-VN

@@ -1,0 +1,127 @@
+table fact_bundle_summary
+	lineageTag: c7a59cda-1bca-44cc-900c-96b0e5235059
+
+	column basket_type
+		dataType: string
+		lineageTag: 59fdb652-9dd2-4e29-a3ce-528ffc830f5a
+		summarizeBy: none
+		sourceColumn: basket_type
+		annotation SummarizationSetBy = Automatic
+
+	column total_orders
+		dataType: int64
+		formatString: #,##0
+		lineageTag: e8091d86-5f65-4f67-8684-5fe77ca908a6
+		summarizeBy: sum
+		sourceColumn: total_orders
+		annotation SummarizationSetBy = Automatic
+
+	column order_share_pct
+		dataType: double
+		lineageTag: 91990f75-1b35-4e9d-bf0b-e964cfbd3edb
+		summarizeBy: sum
+		sourceColumn: order_share_pct
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column total_gmv
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: ff370b58-1309-48fe-ac09-68a875474e4f
+		summarizeBy: sum
+		sourceColumn: total_gmv
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column aov
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: b570b79e-21e1-4b31-ad2c-016c260755e4
+		summarizeBy: sum
+		sourceColumn: aov
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_items
+		dataType: double
+		lineageTag: b4c3f79a-22d9-4dca-98ef-1ccffe244ca2
+		summarizeBy: sum
+		sourceColumn: avg_items
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_sellers
+		dataType: double
+		lineageTag: 82d3a397-5455-4103-91f4-27135e3c6bc8
+		summarizeBy: sum
+		sourceColumn: avg_sellers
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_delivery_days
+		dataType: double
+		lineageTag: fc1b9034-2cce-400f-bf03-8f3b9f61e7a6
+		summarizeBy: sum
+		sourceColumn: avg_delivery_days
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_handling_days
+		dataType: double
+		lineageTag: 690e63e4-e34c-4473-91db-9c3d6ff1041a
+		summarizeBy: sum
+		sourceColumn: avg_handling_days
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_transit_days
+		dataType: double
+		lineageTag: 0410a407-5800-44fd-841f-bb3e5f0909b6
+		summarizeBy: sum
+		sourceColumn: avg_transit_days
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column late_delivery_pct
+		dataType: double
+		lineageTag: 488ebfb8-25b0-4fb1-b1c5-a69620f0f50a
+		summarizeBy: sum
+		sourceColumn: late_delivery_pct
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_review_score
+		dataType: double
+		lineageTag: fa98e925-69c4-4761-ab47-670c1ebe0897
+		summarizeBy: sum
+		sourceColumn: avg_review_score
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column pct_1_star
+		dataType: double
+		lineageTag: 4cd86446-0a13-4749-a236-a332b77e60b9
+		summarizeBy: sum
+		sourceColumn: pct_1_star
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column freight_burden_pct
+		dataType: double
+		lineageTag: 018c348d-7552-4ec8-8a7a-562651dc8621
+		summarizeBy: sum
+		sourceColumn: freight_burden_pct
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition fact_bundle_summary = m
+		mode: import
+		source =
+				let
+				    Nguon = Csv.Document(File.Contents("c:/Users/ASUS/Documents/Năm III/CSDL/data_bi/fact_bundle_summary.csv"),[Delimiter=",", Columns=14, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Tieu de Duoc Tang cap" = Table.PromoteHeaders(Nguon, [PromoteAllScalars=true]),
+				    #"Thay doi Loai" = Table.TransformColumnTypes(#"Tieu de Duoc Tang cap",{{"basket_type", type text}, {"total_orders", Int64.Type}, {"order_share_pct", type number}, {"total_gmv", type number}, {"aov", type number}, {"avg_items", type number}, {"avg_sellers", type number}, {"avg_delivery_days", type number}, {"avg_handling_days", type number}, {"avg_transit_days", type number}, {"late_delivery_pct", type number}, {"avg_review_score", type number}, {"pct_1_star", type number}, {"freight_burden_pct", type number}})
+				in
+				    #"Thay doi Loai"
+
+	annotation PBI_ResultType = Table

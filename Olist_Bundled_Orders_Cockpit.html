@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chẩn Đoán Đơn Gộp vs Đơn Đơn: Nghịch Lý Giao Nhanh & Sụp Đổ Review</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #070B14;
+      --bg-surface: #0E1526;
+      --bg-card: #141E34;
+      --border-color: #1E2D4A;
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --text-faint: #64748B;
+      --accent-blue: #38BDF8;
+      --accent-green: #10B981;
+      --accent-amber: #F59E0B;
+      --accent-rose: #F43F5E;
+      --accent-purple: #A855F7;
+      --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      font-family: var(--font-main);
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      font-size: 13.5px;
+    }
+
+    header {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .badge-pill {
+      background: rgba(56, 189, 248, 0.12);
+      color: var(--accent-blue);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 3px 10px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .header-title {
+      font-size: 15.5px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .header-sub {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .header-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .btn-action {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-action:hover {
+      color: var(--text-main);
+      border-color: var(--accent-blue);
+      background: rgba(56, 189, 248, 0.08);
+    }
+
+    nav.tab-bar {
+      background: #0A0F1D;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      padding: 0 28px;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--text-muted);
+      padding: 10px 16px;
+      font-family: var(--font-main);
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .tab-btn:hover { color: var(--text-main); }
+    .tab-btn.active {
+      color: var(--accent-blue);
+      border-bottom-color: var(--accent-blue);
+      background: rgba(56, 189, 248, 0.05);
+    }
+    .tab-btn .tab-num {
+      background: rgba(255,255,255,0.06);
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+    }
+    .tab-btn.active .tab-num {
+      background: var(--accent-blue);
+      color: #070B14;
+      font-weight: 700;
+    }
+
+    main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .tab-content {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+      animation: fadeIn 0.2s ease-in-out;
+    }
+    .tab-content.active { display: flex; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+    }
+    .kpi-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 14px 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--accent-color, var(--accent-blue));
+    }
+    .kpi-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    .kpi-val {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-main);
+      font-family: var(--font-mono);
+      margin: 4px 0 2px 0;
+    }
+    .kpi-sub {
+      font-size: 11px;
+      color: var(--text-faint);
+    }
+
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .grid-3col {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .card-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-title .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-blue);
+    }
+    .card-desc {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .chart-container {
+      position: relative;
+      height: 250px;
+      width: 100%;
+    }
+
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    table.data-table th {
+      background: #111A2E;
+      color: var(--text-muted);
+      text-align: left;
+      padding: 9px 12px;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-color);
+    }
+    table.data-table td {
+      padding: 9px 12px;
+      border-bottom: 1px solid rgba(30, 45, 74, 0.5);
+      color: var(--text-main);
+    }
+    table.data-table tr:hover td {
+      background: rgba(56, 189, 248, 0.04);
+    }
+    .tabular-num {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+    }
+    table.data-table th.tabular-num { text-align: right; }
+
+    .tag-danger {
+      background: rgba(244, 63, 94, 0.15);
+      color: var(--accent-rose);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 10.5px;
+      font-weight: 600;
+    }
+    .tag-warning {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--accent-amber);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 10.5px;
+      font-weight: 600;
+    }
+    .tag-success {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent-green);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 10.5px;
+      font-weight: 600;
+    }
+
+    .sql-box {
+      background: #05080F;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 12px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #93C5FD;
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    .insight-callout {
+      background: rgba(56, 189, 248, 0.06);
+      border-left: 3px solid var(--accent-blue);
+      padding: 12px 14px;
+      border-radius: 0 6px 6px 0;
+      font-size: 12px;
+      color: #E2E8F0;
+      line-height: 1.5;
+    }
+    .insight-callout strong { color: var(--accent-blue); }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 28px;
+      background: rgba(14, 21, 38, 0.95);
+      border: 1px solid var(--accent-blue);
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-size: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      display: none;
+      z-index: 9999;
+      backdrop-filter: blur(8px);
+    }
+
+    .slicer-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--bg-card);
+      padding: 8px 14px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+    }
+    .slicer-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+    .slicer-select {
+      background: #070B14;
+      border: 1px solid var(--border-color);
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 11.5px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    footer {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-color);
+      padding: 10px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+      font-size: 11.5px;
+      color: var(--text-muted);
+    }
+    .footer-nav {
+      display: flex;
+      gap: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand-group">
+      <span class="badge-pill">Olist Diagnostic Audit</span>
+      <div>
+        <div class="header-title">CHẨN ĐOÁN GIAO ĐƠN GỘP VS ĐƠN ĐƠN: NGHỊCH LÝ GIAO NHANH & SỤP ĐỔ ĐÁNH GIÁ REVIEW</div>
+        <div class="header-sub">Đối soát toàn diện 96,478 đơn hàng delivered trên cơ sở dữ liệu Olist Brazil</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div class="slicer-wrap">
+        <span class="slicer-label">Slicer Giỏ Hàng:</span>
+        <select id="basketSlicer" class="slicer-select" onchange="applySlicerFilter(this.value)">
+          <option value="ALL">Toàn Bộ Phân Nhóm</option>
+          <option value="1">1. Đơn Đơn (Single Item)</option>
+          <option value="2">2. Đơn Gộp Cùng Seller</option>
+          <option value="3">3. Đơn Gộp Đa Seller</option>
+        </select>
+      </div>
+      <button class="btn-action" onclick="copySqlSnippet()">Copy SQL</button>
+      <button class="btn-action" onclick="window.print()">In Báo Cáo / PDF</button>
+    </div>
+  </header>
+
+  <nav class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab(0)"><span class="tab-num">1</span>Tổng Quan Cơ Cấu Giỏ Hàng</button>
+    <button class="tab-btn" onclick="switchTab(1)"><span class="tab-num">2</span>Nghịch Lý Vận Tải vs Review</button>
+    <button class="tab-btn" onclick="switchTab(2)"><span class="tab-num">3</span>Ma Trận Chéo SLA On-Time / Late</button>
+    <button class="tab-btn" onclick="switchTab(3)"><span class="tab-num">4</span>Phân Lớp Độ Phức Tạp (Item & Seller)</button>
+    <button class="tab-btn" onclick="switchTab(4)"><span class="tab-num">5</span>Định Vị Căn Bệnh & Playbook</button>
+  </nav>
+
+  <main>
+
+    <!-- TAB 1: OVERVIEW -->
+    <div class="tab-content active" id="tab0">
+      <div class="kpi-grid">
+        <div class="kpi-card" style="--accent-color: #38BDF8;">
+          <div class="kpi-label">Tổng Đơn Hàng Hoàn Tất</div>
+          <div class="kpi-val">96,478</div>
+          <div class="kpi-sub">89.5% là đơn đơn lẻ (1 item)</div>
+        </div>
+        <div class="kpi-card" style="--accent-color: #10B981;">
+          <div class="kpi-label">Tổng Doanh Thu GMV</div>
+          <div class="kpi-val">R$ 15.49M</div>
+          <div class="kpi-sub">AOV đơn gộp đạt R$ 261.12</div>
+        </div>
+        <div class="kpi-card" style="--accent-color: #F59E0B;">
+          <div class="kpi-label">TG Giao TB Toàn Sàn</div>
+          <div class="kpi-val">12.53 Ngày</div>
+          <div class="kpi-sub">Đơn gộp đa seller chỉ 9.12 ngày</div>
+        </div>
+        <div class="kpi-card" style="--accent-color: #EC4899;">
+          <div class="kpi-label">Tỷ Lệ Giao Trễ SLA</div>
+          <div class="kpi-val">8.11%</div>
+          <div class="kpi-sub">Đơn gộp đa seller trễ cực thấp: 1.41%</div>
+        </div>
+        <div class="kpi-card" style="--accent-color: #F43F5E;">
+          <div class="kpi-label">Tỷ Lệ Đánh Giá 1-Sao</div>
+          <div class="kpi-val">9.57%</div>
+          <div class="kpi-sub">Đơn gộp đa seller vọt lên 35.22%</div>
+        </div>
+      </div>
+
+      <div class="grid-2col">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><span class="dot"></span>Cơ Cấu Số Lượng Đơn & Doanh Thu Theo Loại Giỏ Hàng</div>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartBasketShare"></canvas>
+          </div>
+          <div class="card-desc">Đơn đơn chiếm ưu thế áp đảo 89.54% tổng lượng đơn. Đơn gộp đa người bán chỉ chiếm 1.32% thị phần đơn nhưng lại là tâm chấn khủng hoảng trải nghiệm khách hàng.</div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><span class="dot" style="background:#10B981;"></span>Bảng Kê Chi Tiết 3 Phân Khúc Giỏ Hàng</div>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Phân Khúc Giỏ Hàng</th>
+                <th class="tabular-num">Số Đơn</th>
+                <th class="tabular-num">Tỷ Trọng</th>
+                <th class="tabular-num">AOV (BRL)</th>
+                <th class="tabular-num">TG Giao</th>
+                <th class="tabular-num">Trễ SLA</th>
+                <th class="tabular-num">Review TB</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1. Đơn Đơn (Single Item)</strong></td>
+                <td class="tabular-num">86,391</td>
+                <td class="tabular-num">89.54%</td>
+                <td class="tabular-num">R$ 150.22</td>
+                <td class="tabular-num">12.61 d</td>
+                <td class="tabular-num">8.29%</td>
+                <td class="tabular-num"><span class="tag-success">4.21 ★</span></td>
+              </tr>
+              <tr>
+                <td><strong>2. Đơn Gộp Cùng Seller</strong></td>
+                <td class="tabular-num">8,812</td>
+                <td class="tabular-num">9.13%</td>
+                <td class="tabular-num">R$ 247.30</td>
+                <td class="tabular-num">12.30 d</td>
+                <td class="tabular-num">7.35%</td>
+                <td class="tabular-num"><span class="tag-warning">3.77 ★</span></td>
+              </tr>
+              <tr>
+                <td><strong>3. Đơn Gộp Đa Seller</strong></td>
+                <td class="tabular-num">1,275</td>
+                <td class="tabular-num">1.32%</td>
+                <td class="tabular-num">R$ 261.12</td>
+                <td class="tabular-num">9.12 d</td>
+                <td class="tabular-num">1.41%</td>
+                <td class="tabular-num"><span class="tag-danger">2.85 ★</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="insight-callout">
+            <strong>Cầu nối phân tích:</strong> Tại sao đơn mua từ nhiều seller khác nhau (Đơn gộp Đa Seller) có thời gian giao hàng nhanh hơn hẳn 3.5 ngày và tỷ lệ trễ hạn chỉ 1.41%, nhưng điểm số hài lòng lại sụp đổ xuống mức kỷ lục 2.85 sao? Chặng tiếp theo sẽ giải phẫu nghịch lý này.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: PARADOX -->
+    <div class="tab-content" id="tab1">
+      <div class="grid-2col">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><span class="dot" style="background:#F59E0B;"></span>Nghịch Lý Thời Gian Giao Hàng vs Điểm Đánh Giá</div>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartParadoxDelivery"></canvas>
+          </div>
+          <div class="card-desc">Thời gian giao hàng giảm mạnh từ 12.61 ngày xuống 9.12 ngày (-27.7%), nhưng điểm review lại sụt giảm tương ứng từ 4.21 sao xuống 2.85 sao (-32.3%).</div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><span class="dot" style="background:#F43F5E;"></span>Sự Leo Thang Đánh Giá 1-Sao (Tỷ Lệ Bất Mãn Tột Cùng)</div>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartParadoxOneStar"></canvas>
+          </div>
+          <div class="card-desc">Tỷ lệ khách hàng chấm 1 sao tăng gấp hơn 4 lần: từ 8.43% ở đơn đơn vọt lên 35.22% ở đơn gộp đa người bán.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><span class="dot" style="background:#38BDF8;"></span>Giải Mã 3 Cơ Chế Tạo Nên Nghịch Lý</div>
+        </div>
+        <div class="grid-2col" style="gap:14px;">
+          <div class="insight-callout">
+            <strong>1. Hiệu Ứng Bất Đối Xứng Giao Hàng Tách Kiện (Split-Shipment Anxiety):</strong><br>
+            Khi mua 1 đơn có 2 seller, khách nhận 2 kiện vào 2 thời điểm khác nhau. Dù kiện đầu tiên tới cực sớm (ngày thứ 4), khách hàng rơi vào trạng thái hoang mang tưởng đơn hàng bị thiếu/mất hàng. Sự thiếu hụt tracking đồng bộ trên Olist kích hoạt phản xạ đánh giá 1 sao ngay lập tức.
+          </div>
+          <div class="insight-callout">
+            <strong>2. Cơ Chế Bắt Lỗi Mắt Xích Yếu Nhất (Weakest-Link Friction):</strong><br>
+            Khách hàng chỉ chấm 1 điểm review duy nhất cho cả giỏ hàng. Chỉ cần 1 trong các seller gửi sai màu, trầy xước hoặc đóng gói cẩu thả, điểm review của toàn bộ đơn bị kéo sập xuống 1 sao, trừng phạt lây sang cả những người bán hoàn hảo còn lại.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: SLA CROSSTAB -->
+    <div class="tab-content" id="tab2">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><span class="dot"></span>Ma Trận Chéo Đối Chiếu SLA (Đúng Hạn vs Trễ Hạn) Đến Điểm Review</div>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Phân Khúc Giỏ Hàng</th>
+              <th>Trạng Thái SLA</th>
+              <th class="tabular-num">Số Đơn Hàng</th>
+              <th class="tabular-num">Tỷ Lệ Nội Bộ</th>
+              <th class="tabular-num">TG Giao TB (Ngày)</th>
+              <th class="tabular-num">Điểm Review TB</th>
+              <th class="tabular-num">Tỷ Lệ 1-Sao (%)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="2"><strong>1. Đơn Đơn</strong></td>
+              <td><span class="tag-success">Đúng Hạn (On-time)</span></td>
+              <td class="tabular-num">79,231</td>
+              <td class="tabular-num">91.71%</td>
+              <td class="tabular-num">10.90 d</td>
+              <td class="tabular-num">4.36 ★</td>
+              <td class="tabular-num">5.14%</td>
+            </tr>
+            <tr>
+              <td><span class="tag-danger">Trễ Hạn (Late)</span></td>
+              <td class="tabular-num">7,160</td>
+              <td class="tabular-num">8.29%</td>
+              <td class="tabular-num">31.60 d</td>
+              <td class="tabular-num">2.58 ★</td>
+              <td class="tabular-num">44.87%</td>
+            </tr>
+            <tr>
+              <td rowspan="2"><strong>2. Đơn Gộp 1 Seller</strong></td>
+              <td><span class="tag-success">Đúng Hạn (On-time)</span></td>
+              <td class="tabular-num">8,164</td>
+              <td class="tabular-num">92.65%</td>
+              <td class="tabular-num">10.86 d</td>
+              <td class="tabular-num">3.88 ★</td>
+              <td class="tabular-num">15.59%</td>
+            </tr>
+            <tr>
+              <td><span class="tag-danger">Trễ Hạn (Late)</span></td>
+              <td class="tabular-num">648</td>
+              <td class="tabular-num">7.35%</td>
+              <td class="tabular-num">30.57 d</td>
+              <td class="tabular-num">2.47 ★</td>
+              <td class="tabular-num">47.69%</td>
+            </tr>
+            <tr style="background: rgba(244, 63, 94, 0.08);">
+              <td rowspan="2"><strong>3. Đơn Gộp Đa Seller</strong></td>
+              <td><span class="tag-success">Đúng Hạn (On-time)</span></td>
+              <td class="tabular-num">1,257</td>
+              <td class="tabular-num">98.59%</td>
+              <td class="tabular-num"><strong>8.88 d</strong></td>
+              <td class="tabular-num"><strong style="color:var(--accent-rose);">2.87 ★</strong></td>
+              <td class="tabular-num"><strong style="color:var(--accent-rose);">34.84%</strong></td>
+            </tr>
+            <tr style="background: rgba(244, 63, 94, 0.08);">
+              <td><span class="tag-danger">Trễ Hạn (Late)</span></td>
+              <td class="tabular-num">18</td>
+              <td class="tabular-num">1.41%</td>
+              <td class="tabular-num">25.74 d</td>
+              <td class="tabular-num">2.00 ★</td>
+              <td class="tabular-num">61.11%</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="insight-callout" style="border-left-color: var(--accent-rose);">
+          <strong>BẰNG CHỨNG THỰC CHỨNG CHẤN ĐỘNG:</strong> Ở đơn đơn, giao đúng hạn giúp điểm review đạt tới 4.36 sao và chỉ có 5.14% 1 sao. Nhưng đối với Đơn Gộp Đa Seller, dù giao đúng hẹn trong vỏn vẹn 8.88 ngày (98.59% số đơn), <strong>tỷ lệ 1 sao vẫn chạm mức 34.84% và điểm trung bình chỉ đạt 2.87 sao</strong>! Điều này chứng minh bất mãn không hề đến từ trễ hạn vận chuyển, mà bắt nguồn từ trải nghiệm nhận hàng đa kiện phân mảnh.
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: TIERS -->
+    <div class="tab-content" id="tab3">
+      <div class="grid-2col">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><span class="dot" style="background:#A855F7;"></span>Phân Lớp Theo Số Lượng Mặt Hàng (Item Tiers)</div>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartItemTiers"></canvas>
+          </div>
+          <div class="card-desc">Càng mua nhiều món trong 1 giỏ hàng, xác suất phát sinh lỗi chất lượng và thời gian chuẩn bị đơn càng tăng, đẩy tỷ lệ 1-sao từ 8.43% leo thang lên 28.68%.</div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><span class="dot" style="background:#38BDF8;"></span>Phân Lớp Theo Số Lượng Người Bán (Seller Tiers)</div>
+          </div>
+          <div class="chart-container">
+            <canvas id="chartSellerTiers"></canvas>
+          </div>
+          <div class="card-desc">Đơn chạm mốc 3+ người bán có điểm review rơi thẳng đứng xuống 2.24 sao và hơn một nửa số đơn (52.54%) bị đánh giá 1 sao.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><span class="dot"></span>Chi Tiết Số Liệu Phân Lớp</div>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Cấp Phân Lớp</th>
+              <th class="tabular-num">Tổng Đơn</th>
+              <th class="tabular-num">AOV (BRL)</th>
+              <th class="tabular-num">TG Chuẩn Bị (Ngày)</th>
+              <th class="tabular-num">TG Giao TB (Ngày)</th>
+              <th class="tabular-num">Tỷ Lệ 1-Sao (%)</th>
+              <th class="tabular-num">Điểm Review TB</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>1 món</strong></td><td class="tabular-num">86,391</td><td class="tabular-num">R$ 150.22</td><td class="tabular-num">3.18 d</td><td class="tabular-num">12.61 d</td><td class="tabular-num">8.43%</td><td class="tabular-num">4.21 ★</td></tr>
+            <tr><td><strong>2 món</strong></td><td class="tabular-num">7,787</td><td class="tabular-num">R$ 211.81</td><td class="tabular-num">3.37 d</td><td class="tabular-num">11.93 d</td><td class="tabular-num">18.88%</td><td class="tabular-num">3.71 ★</td></tr>
+            <tr><td><strong>3-5 món</strong></td><td class="tabular-num">2,035</td><td class="tabular-num">R$ 337.32</td><td class="tabular-num">3.72 d</td><td class="tabular-num">11.81 d</td><td class="tabular-num">23.83%</td><td class="tabular-num">3.49 ★</td></tr>
+            <tr><td><strong>Trên 5 món</strong></td><td class="tabular-num">265</td><td class="tabular-num">R$ 665.32</td><td class="tabular-num">4.77 d</td><td class="tabular-num">11.90 d</td><td class="tabular-num">28.68%</td><td class="tabular-num">3.28 ★</td></tr>
+            <tr style="border-top: 2px solid var(--border-color);"><td><strong>1 Seller</strong></td><td class="tabular-num">95,203</td><td class="tabular-num">R$ 159.20</td><td class="tabular-num">3.23 d</td><td class="tabular-num">12.58 d</td><td class="tabular-num">9.31%</td><td class="tabular-num">4.17 ★</td></tr>
+            <tr><td><strong>2 Sellers</strong></td><td class="tabular-num">1,216</td><td class="tabular-num">R$ 254.16</td><td class="tabular-num">2.33 d</td><td class="tabular-num">9.15 d</td><td class="tabular-num">34.38%</td><td class="tabular-num">2.88 ★</td></tr>
+            <tr><td><strong>3+ Sellers</strong></td><td class="tabular-num">59</td><td class="tabular-num">R$ 404.57</td><td class="tabular-num">2.41 d</td><td class="tabular-num">8.36 d</td><td class="tabular-num">52.54%</td><td class="tabular-num">2.24 ★</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 5: CONCLUSION & PLAYBOOK -->
+    <div class="tab-content" id="tab4">
+      <div class="card" style="border-color: var(--accent-rose);">
+        <div class="card-header">
+          <div class="card-title" style="color:var(--accent-rose);"><span class="dot" style="background:var(--accent-rose);"></span>ĐỊNH VỊ CĂN BỆNH CỐT LÕI (CORE PROBLEM DIAGNOSIS)</div>
+        </div>
+        <div class="insight-callout" style="background:rgba(244, 63, 94, 0.08); border-left-color: var(--accent-rose); font-size:13px;">
+          <strong>"Khủng Hoảng Mù Thông Tin Kiện Hàng & Cơ Chế Đánh Giá Đồng Quy (Split-Shipment Blindness & Unified Review Penalty)"</strong><br><br>
+          Olist đang vận hành theo mô hình Pure Marketplace phi tập trung (Drop-shipping từ kho seller). Khi người mua đặt nhiều mặt hàng từ các seller khác nhau, hệ thống không hề có cơ chế gom hàng (Hub Consolidation), cũng không cung cấp giao diện Tracking phân rã từng kiện trên app. Khách hàng nhận kiện đầu tiên nhưng thấy đơn hàng hiển thị "Đang giao", dẫn đến tâm lý lo sợ bị lừa đảo hoặc mất hàng. Kết quả là khách hàng trút giận bằng việc đánh giá 1 sao lên toàn bộ đơn hàng, trừng phạt cả những nhà bán hàng uy tín giao hàng sớm.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><span class="dot" style="background:#10B981;"></span>Playbook Hành Động Chiến Lược Theo Phân Cấp A - B - C - D</div>
+        </div>
+        <div class="grid-2col" style="gap:14px;">
+          <div class="card" style="background:#090F1C;">
+            <div style="font-weight:700; color:var(--accent-blue); margin-bottom:6px;">NHÓM A: Can Thiệp Giao Diện Ngay Lập Tức (UI/UX Hotfix)</div>
+            <ul style="padding-left:18px; color:var(--text-muted); line-height:1.6; font-size:12px;">
+              <li><strong>Phân rã đơn hàng (Order Splitting UI):</strong> Khi khách đặt đơn đa seller, lập tức chia thành các Sub-Orders (Đơn con A, Đơn con B) trên app với mã vận đơn riêng biệt.</li>
+              <li><strong>Banner cảnh báo nhận nhiều kiện:</strong> Hiển thị cảnh báo trực quan: <em>"Đơn hàng của bạn sẽ được giao thành 2 kiện riêng biệt do các người bán ở địa điểm khác nhau."</em></li>
+            </ul>
+          </div>
+
+          <div class="card" style="background:#090F1C;">
+            <div style="font-weight:700; color:var(--accent-green); margin-bottom:6px;">NHÓM B: Cải Cách Đánh Giá Review Theo Từng Kiện (Item-level Review)</div>
+            <ul style="padding-left:18px; color:var(--text-muted); line-height:1.6; font-size:12px;">
+              <li><strong>Tách form review cho từng người bán:</strong> Chấm dứt cơ chế 1 form review chung cho toàn bộ đơn gộp. Khách hàng chấm sao cho từng kiện nhận được.</li>
+              <li><strong>Bảo vệ người bán chuẩn mực:</strong> Loại bỏ seller bị phạt oan khi lỗi đóng gói hoặc vận chuyển thuộc về seller khác trong cùng giỏ hàng.</li>
+            </ul>
+          </div>
+
+          <div class="card" style="background:#090F1C;">
+            <div style="font-weight:700; color:var(--accent-amber); margin-bottom:6px;">NHÓM C: Thuật Toán Khuyến Khích Mua Cùng Shop (Single-Seller Bundle Incentive)</div>
+            <ul style="padding-left:18px; color:var(--text-muted); line-height:1.6; font-size:12px;">
+              <li>Đơn gộp cùng seller có điểm review đạt 3.77 sao (cao hơn nhiều so với 2.85 sao).</li>
+              <li>Cài đặt thuật toán đề xuất: <em>"Mua thêm sản phẩm từ cùng Shop này để được giảm 20% phí ship và nhận trọn vẹn trong 1 kiện duy nhất."</em></li>
+            </ul>
+          </div>
+
+          <div class="card" style="background:#090F1C;">
+            <div style="font-weight:700; color:var(--accent-rose); margin-bottom:6px;">NHÓM D: Danh Mục Dứt Khoát Chưa Làm (Do Not Do)</div>
+            <ul style="padding-left:18px; color:var(--text-muted); line-height:1.6; font-size:12px;">
+              <li><strong>Không ép bưu cục gom kiện đa seller:</strong> Số đơn đa seller chỉ chiếm 1.32% (1,275 đơn). Xây dựng kho Hub gom đơn sẽ làm đội chi phí logistics và kéo dài thời gian giao hàng từ 9.1 ngày lên 18+ ngày.</li>
+              <li><strong>Không cấm mua gộp đa seller:</strong> Vì nhóm đơn này mang lại AOV cao nhất (R$ 261.12), việc cấm đoán sẽ làm sụt giảm GMV giỏ hàng giá trị cao.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <div id="toast" class="toast">Đã sao chép câu lệnh SQL vào bộ nhớ đệm!</div>
+
+  <footer>
+    <div>Bản quyền Báo Cáo Chẩn Đoán Dữ Liệu Olist &copy; 2026. Chuẩn phân tích cấp cao.</div>
+    <div class="footer-nav">
+      <button class="btn-action" onclick="prevTab()">← Tab Trước</button>
+      <button class="btn-action" onclick="nextTab()">Tab Tiếp Theo →</button>
+    </div>
+  </footer>
+
+  <script>
+    let currentTab = 0;
+    const totalTabs = 5;
+
+    function switchTab(index) {
+      if (index < 0 || index >= totalTabs) return;
+      currentTab = index;
+      document.querySelectorAll('.tab-btn').forEach((btn, idx) => {
+        btn.classList.toggle('active', idx === index);
+      });
+      document.querySelectorAll('.tab-content').forEach((content, idx) => {
+        content.classList.toggle('active', idx === index);
+      });
+      // Resize charts
+      setTimeout(() => {
+        if (chartShare) chartShare.resize();
+        if (chartParadox1) chartParadox1.resize();
+        if (chartParadox2) chartParadox2.resize();
+        if (chartItem) chartItem.resize();
+        if (chartSeller) chartSeller.resize();
+      }, 50);
+    }
+
+    function prevTab() { switchTab(currentTab - 1); }
+    function nextTab() { switchTab(currentTab + 1); }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'PageDown') nextTab();
+      if (e.key === 'ArrowLeft' || e.key === 'PageUp') prevTab();
+    });
+
+    function copySqlSnippet() {
+      const sql = `-- Chẩn đoán ma trận đơn gộp vs đơn đơn & SLA review
+SELECT 
+    CASE 
+        WHEN oi.items_count = 1 THEN '1. Don Don (Single Item)'
+        WHEN oi.sellers_count = 1 THEN '2. Don Gop Cung Seller'
+        ELSE '3. Don Gop Da Seller'
+    END AS basket_type,
+    COUNT(*) AS total_orders,
+    ROUND(SUM(o.payment_total), 2) AS total_gmv,
+    ROUND(AVG(o.payment_total), 2) AS aov,
+    ROUND(AVG(DATEDIFF(o.order_delivered_customer_date, o.order_purchase_timestamp)), 2) AS avg_delivery_days,
+    ROUND(AVG(CASE WHEN DATE(o.order_delivered_customer_date) > DATE(o.order_estimated_delivery_date) THEN 100.0 ELSE 0 END), 2) AS late_delivery_pct,
+    ROUND(AVG(r.review_score), 2) AS avg_review_score,
+    ROUND(AVG(CASE WHEN r.review_score = 1 THEN 100.0 ELSE 0 END), 2) AS pct_1_star
+FROM olist_raw.olist_orders_dataset o
+JOIN (
+    SELECT order_id, COUNT(*) AS items_count, COUNT(DISTINCT seller_id) AS sellers_count
+    FROM olist_raw.olist_order_items_dataset
+    GROUP BY order_id
+) oi ON o.order_id = oi.order_id
+LEFT JOIN (
+    SELECT order_id, AVG(review_score) AS review_score
+    FROM olist_raw.olist_order_reviews_dataset
+    GROUP BY order_id
+) r ON o.order_id = r.order_id
+WHERE o.order_status = 'delivered'
+  AND o.order_delivered_customer_date IS NOT NULL
+GROUP BY basket_type;`;
+
+      navigator.clipboard.writeText(sql).then(() => {
+        const toast = document.getElementById('toast');
+        toast.style.display = 'block';
+        setTimeout(() => { toast.style.display = 'none'; }, 2500);
+      });
+    }
+
+    // CHARTS INITIALIZATION
+    Chart.defaults.color = '#94A3B8';
+    Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
+
+    // Chart 1: Share
+    const ctxShare = document.getElementById('chartBasketShare').getContext('2d');
+    const chartShare = new Chart(ctxShare, {
+      type: 'doughnut',
+      data: {
+        labels: ['Đơn Đơn (1 Item)', 'Đơn Gộp Cùng Seller', 'Đơn Gộp Đa Seller'],
+        datasets: [{
+          data: [86391, 8812, 1275],
+          backgroundColor: ['#38BDF8', '#F59E0B', '#F43F5E'],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { boxWidth: 12, padding: 14 } }
+        },
+        cutout: '68%'
+      }
+    });
+
+    // Chart 2: Delivery Paradox
+    const ctxParadox1 = document.getElementById('chartParadoxDelivery').getContext('2d');
+    const chartParadox1 = new Chart(ctxParadox1, {
+      type: 'bar',
+      data: {
+        labels: ['1. Đơn Đơn', '2. Gộp Cùng Seller', '3. Gộp Đa Seller'],
+        datasets: [
+          {
+            label: 'TG Giao TB (Ngày)',
+            data: [12.61, 12.30, 9.12],
+            backgroundColor: '#38BDF8',
+            borderRadius: 4,
+            yAxisID: 'y'
+          },
+          {
+            label: 'Điểm Review TB (★)',
+            data: [4.21, 3.77, 2.85],
+            type: 'line',
+            borderColor: '#F43F5E',
+            backgroundColor: '#F43F5E',
+            pointRadius: 6,
+            yAxisID: 'y1'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: { beginAtZero: true, grid: { color: 'rgba(30,45,74,0.4)' }, title: { display: true, text: 'Ngày Giao' } },
+          y1: { beginAtZero: false, min: 2.0, max: 5.0, position: 'right', grid: { display: false }, title: { display: true, text: 'Review (1-5★)' } }
+        }
+      }
+    });
+
+    // Chart 3: One Star Surging
+    const ctxParadox2 = document.getElementById('chartParadoxOneStar').getContext('2d');
+    const chartParadox2 = new Chart(ctxParadox2, {
+      type: 'bar',
+      data: {
+        labels: ['1. Đơn Đơn', '2. Gộp Cùng Seller', '3. Gộp Đa Seller'],
+        datasets: [{
+          label: 'Tỷ Lệ 1-Sao (%)',
+          data: [8.43, 17.95, 35.22],
+          backgroundColor: ['#10B981', '#F59E0B', '#F43F5E'],
+          borderRadius: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: { beginAtZero: true, max: 40, grid: { color: 'rgba(30,45,74,0.4)' }, title: { display: true, text: 'Tỷ Lệ 1-Sao (%)' } }
+        }
+      }
+    });
+
+    // Chart 4: Item Tiers
+    const ctxItem = document.getElementById('chartItemTiers').getContext('2d');
+    const chartItem = new Chart(ctxItem, {
+      type: 'line',
+      data: {
+        labels: ['1 món', '2 món', '3-5 món', 'Trên 5 món'],
+        datasets: [{
+          label: 'Tỷ Lệ 1-Sao Theo Số Món (%)',
+          data: [8.43, 18.88, 23.83, 28.68],
+          borderColor: '#A855F7',
+          backgroundColor: 'rgba(168, 85, 247, 0.1)',
+          fill: true,
+          pointRadius: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: { beginAtZero: true, max: 35, grid: { color: 'rgba(30,45,74,0.4)' } }
+        }
+      }
+    });
+
+    // Chart 5: Seller Tiers
+    const ctxSeller = document.getElementById('chartSellerTiers').getContext('2d');
+    const chartSeller = new Chart(ctxSeller, {
+      type: 'bar',
+      data: {
+        labels: ['1 Seller', '2 Sellers', '3+ Sellers'],
+        datasets: [{
+          label: 'Tỷ Lệ 1-Sao Theo Số Seller (%)',
+          data: [9.31, 34.38, 52.54],
+          backgroundColor: ['#10B981', '#F59E0B', '#F43F5E'],
+          borderRadius: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: { beginAtZero: true, max: 60, grid: { color: 'rgba(30,45,74,0.4)' } }
+        }
+      }
+    });
+
+    function applySlicerFilter(val) {
+      if (val === 'ALL') {
+        chartShare.data.datasets[0].backgroundColor = ['#38BDF8', '#F59E0B', '#F43F5E'];
+      } else {
+        const idx = parseInt(val) - 1;
+        chartShare.data.datasets[0].backgroundColor = chartShare.data.datasets[0].data.map((_, i) => i === idx ? '#38BDF8' : '#1E2D4A');
+      }
+      chartShare.update();
+    }
+  </script>
+</body>
+</html>

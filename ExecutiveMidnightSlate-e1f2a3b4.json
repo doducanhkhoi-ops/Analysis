@@ -1,0 +1,117 @@
+{
+  "name": "ExecutiveMidnightSlate-e1f2a3b4.json",
+  "dataColors": [
+    "#38BDF8",
+    "#FBBF24",
+    "#F43F5E",
+    "#10B981",
+    "#818CF8",
+    "#A78BFA",
+    "#34D399",
+    "#FB923C"
+  ],
+  "good": "#10B981",
+  "neutral": "#FBBF24",
+  "bad": "#F43F5E",
+  "maximum": "#38BDF8",
+  "center": "#FBBF24",
+  "minimum": "#F43F5E",
+  "null": "#64748B",
+  "foreground": "#F8FAFC",
+  "foregroundNeutralSecondary": "#94A3B8",
+  "foregroundNeutralTertiary": "#64748B",
+  "background": "#0C1322",
+  "backgroundLight": "#162032",
+  "backgroundNeutral": "#060911",
+  "tableAccent": "#38BDF8",
+  "textClasses": {
+    "label": {
+      "fontFace": "Segoe UI",
+      "fontSize": 10,
+      "color": "#94A3B8"
+    },
+    "title": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 12,
+      "color": "#F8FAFC"
+    },
+    "callout": {
+      "fontFace": "Segoe UI Bold",
+      "fontSize": 24,
+      "color": "#F8FAFC"
+    },
+    "header": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 11,
+      "color": "#F8FAFC"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#0C1322"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#1E293B"
+              }
+            },
+            "radius": 10,
+            "width": 1
+          }
+        ],
+        "dropShadow": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#000000"
+              }
+            },
+            "transparency": 50,
+            "position": "Outer",
+            "preset": "BottomRight"
+          }
+        ],
+        "title": [
+          {
+            "show": true,
+            "fontFamily": "Segoe UI Semibold",
+            "fontSize": 12,
+            "fontColor": {
+              "solid": {
+                "color": "#F8FAFC"
+              }
+            }
+          }
+        ],
+        "subTitle": [
+          {
+            "show": false
+          }
+        ]
+      }
+    },
+    "tableEx": {
+      "*": {
+        "stylePreset": [
+          {
+            "name": "None"
+          }
+        ]
+      }
+    }
+  }
+}

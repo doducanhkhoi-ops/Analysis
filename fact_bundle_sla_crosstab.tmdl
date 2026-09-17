@@ -1,0 +1,77 @@
+table fact_bundle_sla_crosstab
+	lineageTag: 5f5a45c0-213b-4bb1-b9c7-1fd6bc7400b9
+
+	column basket_type
+		dataType: string
+		lineageTag: b143997a-5318-4206-8f05-4e0934152788
+		summarizeBy: none
+		sourceColumn: basket_type
+		annotation SummarizationSetBy = Automatic
+
+	column is_late
+		dataType: string
+		lineageTag: e122f521-29d8-470c-9f33-0e9576de7b13
+		summarizeBy: none
+		sourceColumn: is_late
+		annotation SummarizationSetBy = Automatic
+
+	column total_orders
+		dataType: int64
+		formatString: #,##0
+		lineageTag: bb776621-e864-4293-a679-859e38ad0a82
+		summarizeBy: sum
+		sourceColumn: total_orders
+		annotation SummarizationSetBy = Automatic
+
+	column pct_within_basket
+		dataType: double
+		lineageTag: 9497e575-f977-4c89-a103-d45f0c75c2ec
+		summarizeBy: sum
+		sourceColumn: pct_within_basket
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_review_score
+		dataType: double
+		lineageTag: db1ec532-544b-4ea7-9924-b592fcb939f0
+		summarizeBy: sum
+		sourceColumn: avg_review_score
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column pct_1_star
+		dataType: double
+		lineageTag: 58219035-ff5e-4326-831d-9f7030fb8f7c
+		summarizeBy: sum
+		sourceColumn: pct_1_star
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column aov
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 97acef0d-1cc1-467a-b63a-cc35e05972c9
+		summarizeBy: sum
+		sourceColumn: aov
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_delivery_days
+		dataType: double
+		lineageTag: 27761254-646f-4ee3-a12d-12f613735222
+		summarizeBy: sum
+		sourceColumn: avg_delivery_days
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition fact_bundle_sla_crosstab = m
+		mode: import
+		source =
+				let
+				    Nguon = Csv.Document(File.Contents("c:/Users/ASUS/Documents/Năm III/CSDL/data_bi/fact_bundle_sla_crosstab.csv"),[Delimiter=",", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Tieu de Duoc Tang cap" = Table.PromoteHeaders(Nguon, [PromoteAllScalars=true]),
+				    #"Thay doi Loai" = Table.TransformColumnTypes(#"Tieu de Duoc Tang cap",{{"basket_type", type text}, {"is_late", type text}, {"total_orders", Int64.Type}, {"pct_within_basket", type number}, {"avg_review_score", type number}, {"pct_1_star", type number}, {"aov", type number}, {"avg_delivery_days", type number}})
+				in
+				    #"Thay doi Loai"
+
+	annotation PBI_ResultType = Table

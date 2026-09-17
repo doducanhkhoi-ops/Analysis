@@ -1,0 +1,95 @@
+table fact_bundle_item_tiers
+	lineageTag: 2ab12098-c620-4b0b-a18e-8aee88c023bf
+
+	column item_bundle_tier
+		dataType: string
+		lineageTag: 73270402-d862-4d6c-b6b6-cee06eb57ff8
+		summarizeBy: none
+		sourceColumn: item_bundle_tier
+		annotation SummarizationSetBy = Automatic
+
+	column total_orders
+		dataType: int64
+		formatString: #,##0
+		lineageTag: b1ddf798-3a0c-490c-9d11-c59be32c245f
+		summarizeBy: sum
+		sourceColumn: total_orders
+		annotation SummarizationSetBy = Automatic
+
+	column total_gmv
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 90774e7f-577c-4b7c-8433-9a068a22378e
+		summarizeBy: sum
+		sourceColumn: total_gmv
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column aov
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 2484d3f4-15b9-4c5c-8fc9-4dbae1d1912c
+		summarizeBy: sum
+		sourceColumn: aov
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_delivery_days
+		dataType: double
+		lineageTag: 2fa649f5-c14f-4053-8a55-922aabdc7a5f
+		summarizeBy: sum
+		sourceColumn: avg_delivery_days
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_handling_days
+		dataType: double
+		lineageTag: 56e83029-0865-41ae-92ac-5f7a99e9d776
+		summarizeBy: sum
+		sourceColumn: avg_handling_days
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_transit_days
+		dataType: double
+		lineageTag: 633bdd59-9848-4f7a-8694-2da085b22791
+		summarizeBy: sum
+		sourceColumn: avg_transit_days
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column late_delivery_pct
+		dataType: double
+		lineageTag: ca384bbd-4aa2-47c8-a9c6-a087975ccfd5
+		summarizeBy: sum
+		sourceColumn: late_delivery_pct
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_review_score
+		dataType: double
+		lineageTag: 2a1e556f-0383-4225-8e33-12f7c368705d
+		summarizeBy: sum
+		sourceColumn: avg_review_score
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column pct_1_star
+		dataType: double
+		lineageTag: f7548883-0aa9-48b3-9e45-2da4a7db7dd1
+		summarizeBy: sum
+		sourceColumn: pct_1_star
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition fact_bundle_item_tiers = m
+		mode: import
+		source =
+				let
+				    Nguon = Csv.Document(File.Contents("c:/Users/ASUS/Documents/Năm III/CSDL/data_bi/fact_bundle_item_tiers.csv"),[Delimiter=",", Columns=10, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Tieu de Duoc Tang cap" = Table.PromoteHeaders(Nguon, [PromoteAllScalars=true]),
+				    #"Thay doi Loai" = Table.TransformColumnTypes(#"Tieu de Duoc Tang cap",{{"item_bundle_tier", type text}, {"total_orders", Int64.Type}, {"total_gmv", type number}, {"aov", type number}, {"avg_delivery_days", type number}, {"avg_handling_days", type number}, {"avg_transit_days", type number}, {"late_delivery_pct", type number}, {"avg_review_score", type number}, {"pct_1_star", type number}})
+				in
+				    #"Thay doi Loai"
+
+	annotation PBI_ResultType = Table

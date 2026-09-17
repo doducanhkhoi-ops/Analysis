@@ -1,0 +1,79 @@
+table fact_bundle_seller_tiers
+	lineageTag: 7f58d2c9-7ce9-478f-8c0e-4bc061054acb
+
+	column seller_tier
+		dataType: string
+		lineageTag: bb54caa7-da91-427c-aa0e-e4d2feeea94b
+		summarizeBy: none
+		sourceColumn: seller_tier
+		annotation SummarizationSetBy = Automatic
+
+	column total_orders
+		dataType: int64
+		formatString: #,##0
+		lineageTag: eace4461-abab-49a2-98f2-5afe19cae791
+		summarizeBy: sum
+		sourceColumn: total_orders
+		annotation SummarizationSetBy = Automatic
+
+	column total_gmv
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 70542859-87ed-4011-8ad6-7765f7e6ed20
+		summarizeBy: sum
+		sourceColumn: total_gmv
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column aov
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 95fdc553-e3bc-4376-b1d0-c759245f88a0
+		summarizeBy: sum
+		sourceColumn: aov
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_delivery_days
+		dataType: double
+		lineageTag: 0d84dfbd-9580-4f2a-b7ca-b13806feb090
+		summarizeBy: sum
+		sourceColumn: avg_delivery_days
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column late_delivery_pct
+		dataType: double
+		lineageTag: 0f02351c-0bc3-49f8-a638-5d88d4f80807
+		summarizeBy: sum
+		sourceColumn: late_delivery_pct
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_review_score
+		dataType: double
+		lineageTag: b84350fd-bc66-4b4d-8ad5-cacd3a05db4f
+		summarizeBy: sum
+		sourceColumn: avg_review_score
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column pct_1_star
+		dataType: double
+		lineageTag: 1abeca0c-830d-4b39-9601-65d72568f566
+		summarizeBy: sum
+		sourceColumn: pct_1_star
+		annotation SummarizationSetBy = Automatic
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition fact_bundle_seller_tiers = m
+		mode: import
+		source =
+				let
+				    Nguon = Csv.Document(File.Contents("c:/Users/ASUS/Documents/Năm III/CSDL/data_bi/fact_bundle_seller_tiers.csv"),[Delimiter=",", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Tieu de Duoc Tang cap" = Table.PromoteHeaders(Nguon, [PromoteAllScalars=true]),
+				    #"Thay doi Loai" = Table.TransformColumnTypes(#"Tieu de Duoc Tang cap",{{"seller_tier", type text}, {"total_orders", Int64.Type}, {"total_gmv", type number}, {"aov", type number}, {"avg_delivery_days", type number}, {"late_delivery_pct", type number}, {"avg_review_score", type number}, {"pct_1_star", type number}})
+				in
+				    #"Thay doi Loai"
+
+	annotation PBI_ResultType = Table
